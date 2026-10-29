@@ -184,7 +184,10 @@
           <div class="tl-head"><h2>Overview across countries</h2><span class="tl-scope" id="cv-matrix-scope"></span>
             <div class="exports"><button type="button" id="x-mx-csv">Download CSV</button><button type="button" class="x-print">Print</button></div></div>
           <p class="tl-note">Each cell is one product in one country, coloured by its strongest status on the selected date. Click a country to open it above, or a product name to open its patent map.</p>
-          <div class="mx-filters" id="cv-mx-filters" aria-label="Filter the overview by region and income group"></div>
+          <div class="mx-filters" role="search" aria-label="Filter the overview">
+            <input type="search" id="mx-search" placeholder="Search a country…" autocomplete="off" aria-label="Search a country in the overview">
+            <div class="mx-dds" id="cv-mx-filters"></div>
+          </div>
           <div class="matrix-wrap" id="cv-matrix"></div>
         </div>
       </div>

@@ -835,7 +835,7 @@
   const cv = { iso: 'ZA', compound: false, stop: 0, day: null, stops: ['today'], sel: null, sort: 'status', hidden: new Set(),
     order: [], hiddenFams: new Set(), statuses: new Set(STATUSES),
     pf: { inn: new Set(), ind: new Set(), ph: new Set(), cls: new Set(), rt: new Set() },
-    reg: new Set(), inc: new Set() };  // reg / inc: region and income filters of the overview table  // order: product keys for the manual order; hiddenFams: 'productKey|familyId'
+    reg: new Set(), inc: new Set(), q: '' };  // reg / inc: region and income filters of the overview table  // order: product keys for the manual order; hiddenFams: 'productKey|familyId'
   const famKey = (p, f) => p.key + '|' + f.id;
   const SORT_LABEL = { manual: 'your own order', status: 'status (granted first)', product: 'product name', type: 'patent type (in force; families grouped by type)', 'expiry-late': 'expiry date (latest first)', 'expiry-soon': 'expiry date (soonest first)' };
   // Patent types from the most to the least central to the product; anything else after.
@@ -1211,24 +1211,45 @@
     };
   }
   const INCOMES = ['Low', 'Lower-middle', 'Upper-middle'];
-  const mxCountries = () => cvCountries().filter(i => !isHic(i) && (!cv.reg.size || cv.reg.has(C[i]?.region)) && (!cv.inc.size || cv.inc.has(C[i]?.income)));
-  const mxFilterText = () => [cv.reg.size && 'Region: ' + [...cv.reg].join(' or '), cv.inc.size && 'Income: ' + [...cv.inc].map(g => g.toLowerCase()).join(' or ')].filter(Boolean).join('; ');
+  const fold = t => t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  const mxCountries = () => cvCountries().filter(i => !isHic(i) && (!cv.reg.size || cv.reg.has(C[i]?.region)) && (!cv.inc.size || cv.inc.has(C[i]?.income))
+    && (!cv.q || fold(cname(i)).includes(fold(cv.q))));
+  const mxFilterText = () => [cv.reg.size && 'Region: ' + [...cv.reg].join(' or '), cv.inc.size && 'Income: ' + [...cv.inc].map(g => g.toLowerCase()).join(' or '),
+    cv.q && `Country name contains "${cv.q}"`].filter(Boolean).join('; ');
   /** Region and income filters of the overview table, as on the LA PrEP licence territories page. */
   function drawMxFilters() {
     const all = cvCountries().filter(i => !isHic(i));
     const regions = [...new Set(all.map(i => C[i]?.region).filter(Boolean))].sort();
-    const box = (name, v, label, on) => `<label class="check"><input type="checkbox" name="${name}" value="${esc(v)}"${on ? ' checked' : ''}> ${esc(label)}</label>`;
     const host = document.getElementById('cv-mx-filters');
-    host.innerHTML = `<fieldset><legend>Region</legend>${regions.map(r => box('mx-reg', r, r, cv.reg.has(r))).join('')}</fieldset>` +
-      `<fieldset><legend>Income group</legend>${INCOMES.map(g => box('mx-inc', g, g + ' income', cv.inc.has(g))).join('')}` +
-      (cv.reg.size || cv.inc.size ? `<button type="button" class="pf-clear" id="mx-clear">Clear region and income filters</button>` : '') + '</fieldset>';
-    host.querySelectorAll('input').forEach(i => i.onchange = () => {
-      const set = i.name === 'mx-reg' ? cv.reg : cv.inc;
+    const open = new Set([...host.querySelectorAll('details[open]')].map(d => d.dataset.k));
+    // Each filter is a compact dropdown: header says "All" or what is ticked; the list opens below.
+    const headOf = (set, name) => !set.size ? 'All' : set.size === 1 ? name([...set][0]) : set.size + ' selected';
+    const names = { reg: v => v, inc: v => v + ' income' };
+    const dd = (k, label, set, values, name) => {
+      return `<details class="mx-dd" data-k="${k}"${open.has(k) ? ' open' : ''}><summary><span class="mx-dd-l">${label}</span><span class="mx-dd-v${set.size ? ' on' : ''}">${esc(headOf(set, name))}</span></summary>` +
+        `<div class="mx-dd-panel">${values.map(v => `<label class="check"><input type="checkbox" value="${esc(v)}"${set.has(v) ? ' checked' : ''}> ${esc(name(v))}` +
+          `<span class="pf-c">${all.filter(i => (k === 'reg' ? C[i]?.region : C[i]?.income) === v).length}</span></label>`).join('')}</div></details>`;
+    };
+    host.innerHTML = dd('reg', 'Region', cv.reg, regions, names.reg) + dd('inc', 'Income group', cv.inc, INCOMES, names.inc) +
+      `<button type="button" class="pf-clear" id="mx-clear"${cv.reg.size || cv.inc.size || cv.q ? '' : ' hidden'}>Clear</button>`;
+    // Ticking updates the header in place, so the list stays open for more ticks.
+    host.querySelectorAll('details.mx-dd').forEach(d => d.querySelectorAll('input').forEach(i => i.onchange = () => {
+      const set = cv[d.dataset.k];
       if (i.checked) set.add(i.value); else set.delete(i.value);
-      drawMxFilters(); drawMatrix(); writeHash();
+      const v = d.querySelector('.mx-dd-v'); v.textContent = headOf(set, names[d.dataset.k]); v.classList.toggle('on', set.size > 0);
+      mxClearShown(); drawMatrix(); writeHash();
+    }));
+    document.getElementById('mx-clear')?.addEventListener('click', () => {
+      cv.reg.clear(); cv.inc.clear(); cv.q = ''; document.getElementById('mx-search').value = ''; drawMxFilters(); drawMatrix(); writeHash();
     });
-    document.getElementById('mx-clear')?.addEventListener('click', () => { cv.reg.clear(); cv.inc.clear(); drawMxFilters(); drawMatrix(); writeHash(); });
   }
+  const mxClearShown = () => { const b = document.getElementById('mx-clear'); if (b) b.hidden = !(cv.reg.size || cv.inc.size || cv.q); };
+  document.getElementById('mx-search').addEventListener('input', ev => {
+    cv.q = ev.target.value.trim(); mxClearShown(); drawMatrix();
+  });
+  // Close an open dropdown when clicking elsewhere or pressing Escape.
+  document.addEventListener('click', ev => document.querySelectorAll('details.mx-dd[open]').forEach(d => { if (!d.contains(ev.target)) d.open = false; }));
+  document.addEventListener('keydown', ev => { if (ev.key === 'Escape') document.querySelectorAll('details.mx-dd[open]').forEach(d => { d.open = false; d.querySelector('summary').focus(); }); });
   function drawMatrix() {
     const mxProducts = cvProducts();
     const isos = mxCountries();
@@ -1248,7 +1269,7 @@
       if (ev.metaKey || ev.ctrlKey || ev.shiftKey) return;  // let the browser open a new tab
       ev.preventDefault(); openEntry(a.dataset.entry); window.scrollTo({ top: 0, behavior: 'smooth' });
     });
-    if (!rows.length) host.insertAdjacentHTML('beforeend', '<p class="panel-empty">No country matches the region and income filters.</p>');
+    if (!rows.length) host.insertAdjacentHTML('beforeend', '<p class="panel-empty">No country matches the search and filters.</p>');
     host.querySelectorAll('th[data-iso]').forEach(t => t.onclick = () => { cv.iso = t.dataset.iso; drawCountryView(); document.getElementById('cv-title').scrollIntoView({ behavior: 'smooth', block: 'start' }); });
     const sw = (c, t, cls = '') => `<span class="swatch"><i class="${cls}" style="${c ? 'background:' + c : ''}"></i>${t}</span>`;
     if (host.previousElementSibling && host.previousElementSibling.matches('.mx-legend')) host.previousElementSibling.remove();

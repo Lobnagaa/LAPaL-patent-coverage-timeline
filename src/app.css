@@ -465,12 +465,27 @@ details.fold > .fold-body > p { margin: 0 0 6px; }
 .pf-clear { margin-top: 4px; background: none; border: 0; padding: 2px 0; color: var(--accent); font-size: 12px; font-weight: 600; cursor: pointer; text-decoration: underline; }
 
 /* Overview table: region and income filters, and product headers that open the product map. */
-.mx-filters { display: flex; flex-wrap: wrap; gap: 8px 28px; margin: 4px 0 10px; }
-.mx-filters fieldset { border: 0; padding: 0; margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 2px 14px; }
-.mx-filters legend { float: left; font-size: 12px; font-weight: 600; color: var(--ink); margin-right: 4px; padding: 0; }
-.mx-filters .check { margin: 2px 0; align-items: center; font-size: 12.5px; }
-.mx-filters .check input { margin-top: 0; }
+.mx-filters { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 6px 0 12px; }
+#mx-search { flex: 0 1 240px; min-width: 160px; padding: 6px 10px; border: 1px solid var(--line); border-radius: 6px; font: inherit; font-size: 13px; background: var(--surface); }
+#mx-search:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: transparent; }
+.mx-dds { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.mx-dd { position: relative; }
+.mx-dd > summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 6px; padding: 6px 10px; border: 1px solid var(--line);
+  border-radius: 6px; background: var(--surface); font-size: 13px; white-space: nowrap; }
+.mx-dd > summary::-webkit-details-marker { display: none; }
+.mx-dd > summary::after { content: '▾'; color: var(--muted); font-size: 11px; }
+.mx-dd[open] > summary, .mx-dd > summary:hover { border-color: var(--accent); }
+.mx-dd > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.mx-dd-l { color: var(--ink-2); }
+.mx-dd-v { color: var(--muted); max-width: 180px; overflow: hidden; text-overflow: ellipsis; }
+.mx-dd-v.on { color: var(--accent); font-weight: 600; }
+.mx-dd-panel { position: absolute; top: calc(100% + 4px); left: 0; z-index: 20; min-width: 260px; max-height: 300px; overflow: auto; padding: 6px 0;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 8px 24px rgba(20, 24, 40, .14); }
+.mx-dd-panel .check { margin: 0; padding: 5px 12px; align-items: center; font-size: 13px; white-space: nowrap; }
+.mx-dd-panel .check:hover { background: var(--page); }
+.mx-dd-panel .check input { margin-top: 0; }
 table.mx thead th a.rot { color: var(--ink); text-decoration: none; border-radius: 4px; }
 table.mx thead th a.rot:hover { color: var(--accent); background: var(--accent-soft); }
 table.mx thead th a.rot:hover span { text-decoration: underline; }
 table.mx thead th a.rot:focus-visible { outline: 2px solid var(--accent); }
+.pf-clear[hidden] { display: none; }

@@ -472,15 +472,30 @@ details.fold > .fold-body > p { margin: 0 0 6px; }
 .pf-clear { margin-top: 4px; background: none; border: 0; padding: 2px 0; color: var(--accent); font-size: 12px; font-weight: 600; cursor: pointer; text-decoration: underline; }
 
 /* Overview table: region and income filters, and product headers that open the product map. */
-.mx-filters { display: flex; flex-wrap: wrap; gap: 8px 28px; margin: 4px 0 10px; }
-.mx-filters fieldset { border: 0; padding: 0; margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 2px 14px; }
-.mx-filters legend { float: left; font-size: 12px; font-weight: 600; color: var(--ink); margin-right: 4px; padding: 0; }
-.mx-filters .check { margin: 2px 0; align-items: center; font-size: 12.5px; }
-.mx-filters .check input { margin-top: 0; }
+.mx-filters { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 6px 0 12px; }
+#mx-search { flex: 0 1 240px; min-width: 160px; padding: 6px 10px; border: 1px solid var(--line); border-radius: 6px; font: inherit; font-size: 13px; background: var(--surface); }
+#mx-search:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: transparent; }
+.mx-dds { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.mx-dd { position: relative; }
+.mx-dd > summary { list-style: none; cursor: pointer; display: flex; align-items: center; gap: 6px; padding: 6px 10px; border: 1px solid var(--line);
+  border-radius: 6px; background: var(--surface); font-size: 13px; white-space: nowrap; }
+.mx-dd > summary::-webkit-details-marker { display: none; }
+.mx-dd > summary::after { content: '▾'; color: var(--muted); font-size: 11px; }
+.mx-dd[open] > summary, .mx-dd > summary:hover { border-color: var(--accent); }
+.mx-dd > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.mx-dd-l { color: var(--ink-2); }
+.mx-dd-v { color: var(--muted); max-width: 180px; overflow: hidden; text-overflow: ellipsis; }
+.mx-dd-v.on { color: var(--accent); font-weight: 600; }
+.mx-dd-panel { position: absolute; top: calc(100% + 4px); left: 0; z-index: 20; min-width: 260px; max-height: 300px; overflow: auto; padding: 6px 0;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 8px 24px rgba(20, 24, 40, .14); }
+.mx-dd-panel .check { margin: 0; padding: 5px 12px; align-items: center; font-size: 13px; white-space: nowrap; }
+.mx-dd-panel .check:hover { background: var(--page); }
+.mx-dd-panel .check input { margin-top: 0; }
 table.mx thead th a.rot { color: var(--ink); text-decoration: none; border-radius: 4px; }
 table.mx thead th a.rot:hover { color: var(--accent); background: var(--accent-soft); }
 table.mx thead th a.rot:hover span { text-decoration: underline; }
 table.mx thead th a.rot:focus-visible { outline: 2px solid var(--accent); }
+.pf-clear[hidden] { display: none; }
 </style>
 </head>
 <body>
@@ -660,7 +675,10 @@ table.mx thead th a.rot:focus-visible { outline: 2px solid var(--accent); }
           <div class="tl-head"><h2>Overview across countries</h2><span class="tl-scope" id="cv-matrix-scope"></span>
             <div class="exports"><button type="button" id="x-mx-csv">Download CSV</button><button type="button" class="x-print">Print</button></div></div>
           <p class="tl-note">Each cell is one product in one country, coloured by its strongest status on the selected date. Click a country to open it above, or a product name to open its patent map.</p>
-          <div class="mx-filters" id="cv-mx-filters" aria-label="Filter the overview by region and income group"></div>
+          <div class="mx-filters" role="search" aria-label="Filter the overview">
+            <input type="search" id="mx-search" placeholder="Search a country…" autocomplete="off" aria-label="Search a country in the overview">
+            <div class="mx-dds" id="cv-mx-filters"></div>
+          </div>
           <div class="matrix-wrap" id="cv-matrix"></div>
         </div>
       </div>
@@ -1514,7 +1532,7 @@ table.mx thead th a.rot:focus-visible { outline: 2px solid var(--accent); }
   const cv = { iso: 'ZA', compound: false, stop: 0, day: null, stops: ['today'], sel: null, sort: 'status', hidden: new Set(),
     order: [], hiddenFams: new Set(), statuses: new Set(STATUSES),
     pf: { inn: new Set(), ind: new Set(), ph: new Set(), cls: new Set(), rt: new Set() },
-    reg: new Set(), inc: new Set() };  // reg / inc: region and income filters of the overview table  // order: product keys for the manual order; hiddenFams: 'productKey|familyId'
+    reg: new Set(), inc: new Set(), q: '' };  // reg / inc: region and income filters of the overview table  // order: product keys for the manual order; hiddenFams: 'productKey|familyId'
   const famKey = (p, f) => p.key + '|' + f.id;
   const SORT_LABEL = { manual: 'your own order', status: 'status (granted first)', product: 'product name', type: 'patent type (in force; families grouped by type)', 'expiry-late': 'expiry date (latest first)', 'expiry-soon': 'expiry date (soonest first)' };
   // Patent types from the most to the least central to the product; anything else after.
@@ -1890,24 +1908,45 @@ table.mx thead th a.rot:focus-visible { outline: 2px solid var(--accent); }
     };
   }
   const INCOMES = ['Low', 'Lower-middle', 'Upper-middle'];
-  const mxCountries = () => cvCountries().filter(i => !isHic(i) && (!cv.reg.size || cv.reg.has(C[i]?.region)) && (!cv.inc.size || cv.inc.has(C[i]?.income)));
-  const mxFilterText = () => [cv.reg.size && 'Region: ' + [...cv.reg].join(' or '), cv.inc.size && 'Income: ' + [...cv.inc].map(g => g.toLowerCase()).join(' or ')].filter(Boolean).join('; ');
+  const fold = t => t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  const mxCountries = () => cvCountries().filter(i => !isHic(i) && (!cv.reg.size || cv.reg.has(C[i]?.region)) && (!cv.inc.size || cv.inc.has(C[i]?.income))
+    && (!cv.q || fold(cname(i)).includes(fold(cv.q))));
+  const mxFilterText = () => [cv.reg.size && 'Region: ' + [...cv.reg].join(' or '), cv.inc.size && 'Income: ' + [...cv.inc].map(g => g.toLowerCase()).join(' or '),
+    cv.q && `Country name contains "${cv.q}"`].filter(Boolean).join('; ');
   /** Region and income filters of the overview table, as on the LA PrEP licence territories page. */
   function drawMxFilters() {
     const all = cvCountries().filter(i => !isHic(i));
     const regions = [...new Set(all.map(i => C[i]?.region).filter(Boolean))].sort();
-    const box = (name, v, label, on) => `<label class="check"><input type="checkbox" name="${name}" value="${esc(v)}"${on ? ' checked' : ''}> ${esc(label)}</label>`;
     const host = document.getElementById('cv-mx-filters');
-    host.innerHTML = `<fieldset><legend>Region</legend>${regions.map(r => box('mx-reg', r, r, cv.reg.has(r))).join('')}</fieldset>` +
-      `<fieldset><legend>Income group</legend>${INCOMES.map(g => box('mx-inc', g, g + ' income', cv.inc.has(g))).join('')}` +
-      (cv.reg.size || cv.inc.size ? `<button type="button" class="pf-clear" id="mx-clear">Clear region and income filters</button>` : '') + '</fieldset>';
-    host.querySelectorAll('input').forEach(i => i.onchange = () => {
-      const set = i.name === 'mx-reg' ? cv.reg : cv.inc;
+    const open = new Set([...host.querySelectorAll('details[open]')].map(d => d.dataset.k));
+    // Each filter is a compact dropdown: header says "All" or what is ticked; the list opens below.
+    const headOf = (set, name) => !set.size ? 'All' : set.size === 1 ? name([...set][0]) : set.size + ' selected';
+    const names = { reg: v => v, inc: v => v + ' income' };
+    const dd = (k, label, set, values, name) => {
+      return `<details class="mx-dd" data-k="${k}"${open.has(k) ? ' open' : ''}><summary><span class="mx-dd-l">${label}</span><span class="mx-dd-v${set.size ? ' on' : ''}">${esc(headOf(set, name))}</span></summary>` +
+        `<div class="mx-dd-panel">${values.map(v => `<label class="check"><input type="checkbox" value="${esc(v)}"${set.has(v) ? ' checked' : ''}> ${esc(name(v))}` +
+          `<span class="pf-c">${all.filter(i => (k === 'reg' ? C[i]?.region : C[i]?.income) === v).length}</span></label>`).join('')}</div></details>`;
+    };
+    host.innerHTML = dd('reg', 'Region', cv.reg, regions, names.reg) + dd('inc', 'Income group', cv.inc, INCOMES, names.inc) +
+      `<button type="button" class="pf-clear" id="mx-clear"${cv.reg.size || cv.inc.size || cv.q ? '' : ' hidden'}>Clear</button>`;
+    // Ticking updates the header in place, so the list stays open for more ticks.
+    host.querySelectorAll('details.mx-dd').forEach(d => d.querySelectorAll('input').forEach(i => i.onchange = () => {
+      const set = cv[d.dataset.k];
       if (i.checked) set.add(i.value); else set.delete(i.value);
-      drawMxFilters(); drawMatrix(); writeHash();
+      const v = d.querySelector('.mx-dd-v'); v.textContent = headOf(set, names[d.dataset.k]); v.classList.toggle('on', set.size > 0);
+      mxClearShown(); drawMatrix(); writeHash();
+    }));
+    document.getElementById('mx-clear')?.addEventListener('click', () => {
+      cv.reg.clear(); cv.inc.clear(); cv.q = ''; document.getElementById('mx-search').value = ''; drawMxFilters(); drawMatrix(); writeHash();
     });
-    document.getElementById('mx-clear')?.addEventListener('click', () => { cv.reg.clear(); cv.inc.clear(); drawMxFilters(); drawMatrix(); writeHash(); });
   }
+  const mxClearShown = () => { const b = document.getElementById('mx-clear'); if (b) b.hidden = !(cv.reg.size || cv.inc.size || cv.q); };
+  document.getElementById('mx-search').addEventListener('input', ev => {
+    cv.q = ev.target.value.trim(); mxClearShown(); drawMatrix();
+  });
+  // Close an open dropdown when clicking elsewhere or pressing Escape.
+  document.addEventListener('click', ev => document.querySelectorAll('details.mx-dd[open]').forEach(d => { if (!d.contains(ev.target)) d.open = false; }));
+  document.addEventListener('keydown', ev => { if (ev.key === 'Escape') document.querySelectorAll('details.mx-dd[open]').forEach(d => { d.open = false; d.querySelector('summary').focus(); }); });
   function drawMatrix() {
     const mxProducts = cvProducts();
     const isos = mxCountries();
@@ -1927,7 +1966,7 @@ table.mx thead th a.rot:focus-visible { outline: 2px solid var(--accent); }
       if (ev.metaKey || ev.ctrlKey || ev.shiftKey) return;  // let the browser open a new tab
       ev.preventDefault(); openEntry(a.dataset.entry); window.scrollTo({ top: 0, behavior: 'smooth' });
     });
-    if (!rows.length) host.insertAdjacentHTML('beforeend', '<p class="panel-empty">No country matches the region and income filters.</p>');
+    if (!rows.length) host.insertAdjacentHTML('beforeend', '<p class="panel-empty">No country matches the search and filters.</p>');
     host.querySelectorAll('th[data-iso]').forEach(t => t.onclick = () => { cv.iso = t.dataset.iso; drawCountryView(); document.getElementById('cv-title').scrollIntoView({ behavior: 'smooth', block: 'start' }); });
     const sw = (c, t, cls = '') => `<span class="swatch"><i class="${cls}" style="${c ? 'background:' + c : ''}"></i>${t}</span>`;
     if (host.previousElementSibling && host.previousElementSibling.matches('.mx-legend')) host.previousElementSibling.remove();

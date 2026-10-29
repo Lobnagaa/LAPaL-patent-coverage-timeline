@@ -211,9 +211,11 @@ the address bar (`inn=`, `ind=`, `ph=`, `cls=`, `rt=`, values separated by `|`),
 the CSV headers; both CSVs carry the attribute columns and their source.
 
 **Overview table**: product names in the header link to that product's patent map
-(`#view=product&entry=<entry id>`, the first entry of the product). Region and income-group checkboxes
-above the table (as on the LA PrEP licence territories page) narrow its rows; they are kept in the
-address bar (`reg=`, `inc=`) and stated in its CSV.
+(`#view=product&entry=<entry id>`, the first entry of the product). Above the table: a country search
+field (matches any part of the name, accents ignored) and two compact dropdowns, Region and Income
+group (World Bank groups, as on the LA PrEP licence territories page), each a checkbox list with
+country counts that stays open while ticking; "Clear" resets all three. Region and income are kept in
+the address bar (`reg=`, `inc=`); all three are stated in the table's CSV.
 
 **Status filter** (side panel, "Show patents"): three checkboxes, Granted, Filed and Not in force, each
 with its status colour swatch (the same colours as the bars, dots, map and overview grid; an unticked
