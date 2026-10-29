@@ -185,6 +185,17 @@ button per hidden product or family and "Reset view". Edits are kept in the addr
 stated in the PNG subtitle and the CSV header ("Rows ordered by", "Products hidden by user",
 "Patent families hidden by user"), and hidden products and families are left out of the chart and its CSV. The country overview grid is not affected.
 
+**Status filter** (side panel, "Show patents"): three checkboxes, Granted, Filed and Not in force, each
+with its status colour swatch (the same colours as the bars, dots, map and overview grid; an unticked
+status is greyed). All are ticked by default and at least one stays ticked. Status is judged on the
+date selected on the slider. Patent families outside the ticked statuses are dropped before the row
+status is computed, so a product row only shows, and is coloured by, the families kept; a product
+left with nothing is listed under the chart as "filtered out", not as "no patent record". Unlike row
+edits, the filter also applies to the country overview grid (empty cells then read "none granted",
+etc.). It shows in the "Edited view" notice (reset by "Reset view"), the header counts and the summary
+sentence (only the ticked statuses are counted), the address bar (`st=granted,filed`), the PNG subtitle
+and both CSV headers ("Patent statuses shown").
+
 **Exports** (PNG, CSV and Print on every chart: map, family timeline, by-country chart; CSV and Print on the country overview; links in every export: lapal.ch page, Espacenet search per patent number `https://worldwide.espacenet.com/patent/search?q=pn%3D<number>`, family link = MedsPaL's Espacenet link, else Google Patents for card families; printed pages end with a Sources block): PNG (title, date shown, legend, source line with URL, LAPaL and MedsPaL logos top right), CSV (one row per patent record, with a
 header block: entry, date shown, scope, snapshot), print stylesheet. Shareable state in the URL hash.
 

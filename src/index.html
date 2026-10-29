@@ -135,6 +135,13 @@
           <label class="check"><input type="radio" name="cv-scope" value="any" checked> Any patent</label>
           <label class="check"><input type="radio" name="cv-scope" value="compound"> Compound patents only</label>
         </div>
+        <fieldset class="filter-group status-filter" id="cv-status">
+          <legend class="filter-label">Show patents</legend>
+          <label class="check"><input type="checkbox" value="granted" checked><i class="sw granted"></i> Granted</label>
+          <label class="check"><input type="checkbox" value="filed" checked><i class="sw filed"></i> Filed</label>
+          <label class="check"><input type="checkbox" value="not_in_force" checked><i class="sw nif"></i> Not in force</label>
+          <p class="filter-note">Status on the date selected above. Same colours as the bars, the map and the overview.</p>
+        </fieldset>
         <div class="filter-group">
           <label class="filter-label" for="cv-sort">Order rows by</label>
           <select id="cv-sort">
