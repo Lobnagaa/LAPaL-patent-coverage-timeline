@@ -169,7 +169,7 @@ button { font: inherit; }
 .tl-note { margin: 4px 0 10px; font-size: 12px; color: var(--ink-2); }
 .tl-body { overflow-x: auto; }
 .tl-body svg { display: block; min-width: 460px; }
-.tl-body .axis text { font-size: 11px; fill: var(--muted); }
+.tl-body .axis text { font-size: 12px; fill: var(--ink-2); font-variant-numeric: tabular-nums; }
 .tl-body .axis line, .tl-body .axis path { stroke: var(--line); }
 .tl-body .grid line { stroke: #f0f1f4; }
 .tl-body .year-label { font-size: 12px; font-weight: 700; fill: var(--navy); }

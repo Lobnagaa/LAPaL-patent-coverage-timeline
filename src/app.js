@@ -574,6 +574,11 @@
     }
     return best;
   }
+  /** Years between axis labels: the smallest of 1, 2, 5, 10 or 20 that leaves at least 56 px per label. */
+  function yearStep(x) {
+    const [a, b] = x.domain(), years = Math.max(1, (b - a) / 31557600000), px = (x.range()[1] - x.range()[0]) / years;
+    return [1, 2, 5, 10, 20].find(st => st * px >= 56) || 20;
+  }
   function drawTimeline() {
     const e = byId.get(state.entryId);
     // All families (compound filter only): a selected family is highlighted, the others dimmed, as in
@@ -636,7 +641,7 @@
     s.append('g').attr('class', 'grid').selectAll('line').data(x.ticks(d3.utcYear.every(5))).join('line')
       .attr('x1', d => x(d)).attr('x2', d => x(d)).attr('y1', TOP - 6).attr('y2', height - 26);
     s.append('g').attr('class', 'axis').attr('transform', `translate(0,${height - 26})`)
-      .call(d3.axisBottom(x).ticks(d3.utcYear.every(width > 1000 ? 2 : 5)).tickFormat(d3.utcFormat('%Y')).tickSizeOuter(0));
+      .call(d3.axisBottom(x).ticks(d3.utcYear.every(yearStep(x))).tickFormat(d3.utcFormat('%Y')).tickSizeOuter(0));
 
     const g = s.append('g');
     for (const r of rows) {
@@ -1034,7 +1039,7 @@
     s.append('g').attr('class', 'grid').selectAll('line').data(x.ticks(d3.utcYear.every(5))).join('line')
       .attr('x1', d => x(d)).attr('x2', d => x(d)).attr('y1', TOP - 6).attr('y2', height - 26);
     s.append('g').attr('class', 'axis').attr('transform', `translate(0,${height - 26})`)
-      .call(d3.axisBottom(x).ticks(d3.utcYear.every(width > 1000 ? 2 : 5)).tickFormat(d3.utcFormat('%Y')).tickSizeOuter(0));
+      .call(d3.axisBottom(x).ticks(d3.utcYear.every(yearStep(x))).tickFormat(d3.utcFormat('%Y')).tickSizeOuter(0));
     const dropLine = s.append('line').attr('class', 'cv-drop').attr('x1', 4).attr('x2', width - RIGHT).attr('visibility', 'hidden');
     for (const r of withRec) {
       const g = s.append('g').attr('class', 'cv-row');
