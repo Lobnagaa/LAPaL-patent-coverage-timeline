@@ -162,13 +162,19 @@
         <p class="filter-note">Data: MedsPaL, as linked to each LAPaL entry. Status today is as recorded in MedsPaL; later dates are projected from expected expiry dates.</p>
       </aside>
       <div class="cv-main">
-        <div class="cv-card">
-          <div class="asof" id="cv-asof" role="status"></div>
-          <div class="slider" id="cv-slider" aria-label="Date"></div>
+        <!-- Country picker first: the view opens on South Africa, and the picker makes clear it can change. -->
+        <div class="cv-card cv-country-head" id="cv-head">
+          <div class="cv-pick-row">
+            <div class="cv-pick">
+              <label class="cv-pick-label" for="cv-country-top">Country</label>
+              <h2 id="cv-title" class="cv-pick-title"><span class="flag" id="cv-flag"></span><select id="cv-country-top"></select></h2>
+            </div>
+            <div class="exports"><button type="button" id="x-cv-png">Save chart as PNG</button><button type="button" id="x-cv-csv">Download CSV</button><button type="button" class="x-print">Print</button></div>
+          </div>
+          <div class="tl-scope" id="cv-scope"></div>
+          <p class="cv-pick-hint">Choose another country here, or click one in the overview across countries below.</p>
         </div>
         <div class="cv-card">
-          <div class="tl-head"><h2 id="cv-title"></h2><span class="tl-scope" id="cv-scope"></span>
-            <div class="exports"><button type="button" id="x-cv-png">Save chart as PNG</button><button type="button" id="x-cv-csv">Download CSV</button><button type="button" class="x-print">Print</button></div></div>
           <div class="edit-note" id="cv-edit-note" role="status" hidden></div>
           <details class="cv-band lic fold" id="cv-hic-note" role="note" hidden><summary><span class="fold-text" id="cv-lic-head"></span></summary><div class="fold-body" id="cv-lic-body"></div></details>
           <details class="cv-band about fold"><summary><span class="fold-text"><b>In words:</b> summary of this chart and how to read it</span></summary>
@@ -178,6 +184,10 @@
             </div>
           </details>
           <div class="tl-legend cv-band cv-legend" id="cv-legend" aria-label="Legend"></div>
+          <div class="cv-date">
+            <div class="asof" id="cv-asof" role="status"></div>
+            <div class="slider" id="cv-slider" aria-label="Date"></div>
+          </div>
           <div class="tl-body" id="cv-products"></div>
         </div>
         <div class="cv-card">

@@ -498,6 +498,23 @@ table.mx thead th a.rot:hover { color: var(--accent); background: var(--accent-s
 table.mx thead th a.rot:hover span { text-decoration: underline; }
 table.mx thead th a.rot:focus-visible { outline: 2px solid var(--accent); }
 .pf-clear[hidden] { display: none; }
+
+/* By-country view: the country picker heads the page, set apart from the chart card. */
+.cv-country-head { background: var(--accent-soft); border-color: #e7cfdf; border-left: 5px solid var(--accent); padding: 14px 18px; }
+.cv-pick-row { display: flex; align-items: flex-end; gap: 12px; flex-wrap: wrap; }
+.cv-pick-row .exports { margin-left: auto; }
+.cv-pick-label { display: block; font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--accent); margin-bottom: 4px; }
+.cv-pick-title { display: flex; align-items: center; gap: 10px; margin: 0; font-size: 22px; }
+.cv-pick-title .flag { font-size: 26px; line-height: 1; }
+#cv-country-top { font: inherit; font-size: 22px; font-weight: 700; color: var(--navy); padding: 4px 40px 4px 12px; border: 1.5px solid var(--accent);
+  border-radius: 8px; background: var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1l6 6 6-6' fill='none' stroke='%2393266B' stroke-width='2'/%3E%3C/svg%3E") no-repeat right 12px center;
+  appearance: none; -webkit-appearance: none; cursor: pointer; max-width: 100%; }
+#cv-country-top:hover { box-shadow: 0 0 0 3px rgba(147, 38, 107, .15); }
+#cv-country-top:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.cv-country-head .tl-scope { margin-top: 8px; font-size: 13px; color: var(--ink-2); }
+.cv-pick-hint { margin: 4px 0 0; font-size: 12px; color: var(--muted); }
+.cv-date { margin: 10px 0 6px; padding: 10px 12px 4px; border: 1px solid var(--line); border-radius: 6px; }
+@media print { #cv-country-top { border: 0; padding: 0; background: none; } .cv-pick-hint { display: none; } }
 </style>
 </head>
 <body>
@@ -655,13 +672,19 @@ table.mx thead th a.rot:focus-visible { outline: 2px solid var(--accent); }
         <p class="filter-note">Data: MedsPaL, as linked to each LAPaL entry. Status today is as recorded in MedsPaL; later dates are projected from expected expiry dates.</p>
       </aside>
       <div class="cv-main">
-        <div class="cv-card">
-          <div class="asof" id="cv-asof" role="status"></div>
-          <div class="slider" id="cv-slider" aria-label="Date"></div>
+        <!-- Country picker first: the view opens on South Africa, and the picker makes clear it can change. -->
+        <div class="cv-card cv-country-head" id="cv-head">
+          <div class="cv-pick-row">
+            <div class="cv-pick">
+              <label class="cv-pick-label" for="cv-country-top">Country</label>
+              <h2 id="cv-title" class="cv-pick-title"><span class="flag" id="cv-flag"></span><select id="cv-country-top"></select></h2>
+            </div>
+            <div class="exports"><button type="button" id="x-cv-png">Save chart as PNG</button><button type="button" id="x-cv-csv">Download CSV</button><button type="button" class="x-print">Print</button></div>
+          </div>
+          <div class="tl-scope" id="cv-scope"></div>
+          <p class="cv-pick-hint">Choose another country here, or click one in the overview across countries below.</p>
         </div>
         <div class="cv-card">
-          <div class="tl-head"><h2 id="cv-title"></h2><span class="tl-scope" id="cv-scope"></span>
-            <div class="exports"><button type="button" id="x-cv-png">Save chart as PNG</button><button type="button" id="x-cv-csv">Download CSV</button><button type="button" class="x-print">Print</button></div></div>
           <div class="edit-note" id="cv-edit-note" role="status" hidden></div>
           <details class="cv-band lic fold" id="cv-hic-note" role="note" hidden><summary><span class="fold-text" id="cv-lic-head"></span></summary><div class="fold-body" id="cv-lic-body"></div></details>
           <details class="cv-band about fold"><summary><span class="fold-text"><b>In words:</b> summary of this chart and how to read it</span></summary>
@@ -671,6 +694,10 @@ table.mx thead th a.rot:focus-visible { outline: 2px solid var(--accent); }
             </div>
           </details>
           <div class="tl-legend cv-band cv-legend" id="cv-legend" aria-label="Legend"></div>
+          <div class="cv-date">
+            <div class="asof" id="cv-asof" role="status"></div>
+            <div class="slider" id="cv-slider" aria-label="Date"></div>
+          </div>
           <div class="tl-body" id="cv-products"></div>
         </div>
         <div class="cv-card">
@@ -1664,6 +1691,8 @@ table.mx thead th a.rot:focus-visible { outline: 2px solid var(--accent); }
     const opt = i => `<option value="${i}">${esc(cname(i))}</option>`;
     sel.innerHTML = isos.map(opt).join('');
     sel.value = cv.iso;
+    const top = document.getElementById('cv-country-top');
+    top.innerHTML = sel.innerHTML; top.value = cv.iso;
     document.getElementById('cv-asof').innerHTML = cv.day
       ? `Showing <b>on ${longDate(cv.day)}</b> (${fromTodayText(cv.day)}): patents expected to have expired by then are shown as not in force. Projection from expected expiry dates only.`
       : `Showing <b>today</b>: status as recorded in MedsPaL.`;
@@ -1674,7 +1703,7 @@ table.mx thead th a.rot:focus-visible { outline: 2px solid var(--accent); }
   }
   function drawCvProducts() {
     const iso = cv.iso;
-    document.getElementById('cv-title').innerHTML = `<span class="flag">${flag(iso)}</span> ${esc(cname(iso))}`;
+    document.getElementById('cv-flag').innerHTML = flag(iso);
     const { shown: shownRows, withRec, without, allHidden, byStatus } = cvRows(iso, cv.day);
     const cnt = k => withRec.filter(r => r.best === k).length;
     document.getElementById('cv-scope').textContent =
@@ -1989,12 +2018,12 @@ table.mx thead th a.rot:focus-visible { outline: 2px solid var(--accent); }
       ev.preventDefault(); openEntry(a.dataset.entry); window.scrollTo({ top: 0, behavior: 'smooth' });
     });
     if (!rows.length) host.insertAdjacentHTML('beforeend', '<p class="panel-empty">No country matches the search and filters.</p>');
-    host.querySelectorAll('th[data-iso]').forEach(t => t.onclick = () => { cv.iso = t.dataset.iso; drawCountryView(); document.getElementById('cv-title').scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+    host.querySelectorAll('th[data-iso]').forEach(t => t.onclick = () => { cv.iso = t.dataset.iso; drawCountryView(); document.getElementById('cv-head').scrollIntoView({ behavior: 'smooth', block: 'start' }); });
     const sw = (c, t, cls = '') => `<span class="swatch"><i class="${cls}" style="${c ? 'background:' + c : ''}"></i>${t}</span>`;
     if (host.previousElementSibling && host.previousElementSibling.matches('.mx-legend')) host.previousElementSibling.remove();
     host.insertAdjacentHTML('beforebegin', `<div class="mx-legend">${sw(COLOR.granted, 'Granted')}${sw(COLOR.filed, 'Filed')}${sw(COLOR.not_in_force, 'Not in force')}${sw('', 'No patent record', 'none')}</div>`);
   }
-  document.getElementById('cv-country').addEventListener('change', ev => { cv.iso = ev.target.value; drawCountryView(); });
+  ['cv-country', 'cv-country-top'].forEach(id => document.getElementById(id).addEventListener('change', ev => { cv.iso = ev.target.value; drawCountryView(); writeHash(); }));
   /** Product filter lists in the side panel; each opens on click and says how many values are ticked. */
   function drawPf() {
     const host = document.getElementById('cv-pfilters');

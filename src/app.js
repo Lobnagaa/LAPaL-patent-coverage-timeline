@@ -965,6 +965,8 @@
     const opt = i => `<option value="${i}">${esc(cname(i))}</option>`;
     sel.innerHTML = isos.map(opt).join('');
     sel.value = cv.iso;
+    const top = document.getElementById('cv-country-top');
+    top.innerHTML = sel.innerHTML; top.value = cv.iso;
     document.getElementById('cv-asof').innerHTML = cv.day
       ? `Showing <b>on ${longDate(cv.day)}</b> (${fromTodayText(cv.day)}): patents expected to have expired by then are shown as not in force. Projection from expected expiry dates only.`
       : `Showing <b>today</b>: status as recorded in MedsPaL.`;
@@ -975,7 +977,7 @@
   }
   function drawCvProducts() {
     const iso = cv.iso;
-    document.getElementById('cv-title').innerHTML = `<span class="flag">${flag(iso)}</span> ${esc(cname(iso))}`;
+    document.getElementById('cv-flag').innerHTML = flag(iso);
     const { shown: shownRows, withRec, without, allHidden, byStatus } = cvRows(iso, cv.day);
     const cnt = k => withRec.filter(r => r.best === k).length;
     document.getElementById('cv-scope').textContent =
@@ -1290,12 +1292,12 @@
       ev.preventDefault(); openEntry(a.dataset.entry); window.scrollTo({ top: 0, behavior: 'smooth' });
     });
     if (!rows.length) host.insertAdjacentHTML('beforeend', '<p class="panel-empty">No country matches the search and filters.</p>');
-    host.querySelectorAll('th[data-iso]').forEach(t => t.onclick = () => { cv.iso = t.dataset.iso; drawCountryView(); document.getElementById('cv-title').scrollIntoView({ behavior: 'smooth', block: 'start' }); });
+    host.querySelectorAll('th[data-iso]').forEach(t => t.onclick = () => { cv.iso = t.dataset.iso; drawCountryView(); document.getElementById('cv-head').scrollIntoView({ behavior: 'smooth', block: 'start' }); });
     const sw = (c, t, cls = '') => `<span class="swatch"><i class="${cls}" style="${c ? 'background:' + c : ''}"></i>${t}</span>`;
     if (host.previousElementSibling && host.previousElementSibling.matches('.mx-legend')) host.previousElementSibling.remove();
     host.insertAdjacentHTML('beforebegin', `<div class="mx-legend">${sw(COLOR.granted, 'Granted')}${sw(COLOR.filed, 'Filed')}${sw(COLOR.not_in_force, 'Not in force')}${sw('', 'No patent record', 'none')}</div>`);
   }
-  document.getElementById('cv-country').addEventListener('change', ev => { cv.iso = ev.target.value; drawCountryView(); });
+  ['cv-country', 'cv-country-top'].forEach(id => document.getElementById(id).addEventListener('change', ev => { cv.iso = ev.target.value; drawCountryView(); writeHash(); }));
   /** Product filter lists in the side panel; each opens on click and says how many values are ticked. */
   function drawPf() {
     const host = document.getElementById('cv-pfilters');
