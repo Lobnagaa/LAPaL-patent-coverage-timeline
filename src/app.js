@@ -965,14 +965,12 @@
   }
   function drawCountryView() {
     drawPf(); drawMxFilters();
-    const sel = document.getElementById('cv-country');
+    const sel = document.getElementById('cv-country-top');
     const isos = cvCountries();
     if (!isos.includes(cv.iso)) cv.iso = isos.includes('ZA') ? 'ZA' : isos[0];
     const opt = i => `<option value="${i}">${esc(cname(i))}</option>`;
     sel.innerHTML = isos.map(opt).join('');
     sel.value = cv.iso;
-    const top = document.getElementById('cv-country-top');
-    top.innerHTML = sel.innerHTML; top.value = cv.iso;
     document.getElementById('cv-asof').innerHTML = asofHtml(cv.day, false, 'MedsPaL');
     renderSlider(document.getElementById('cv-slider'), cv.stops, cv.stop, i => { cv.stop = i; cv.day = i ? cv.stops[i] : null; drawCountryView(); writeHash(); }, {
       active: s => s === 'today' ? 'Today' : longDate(s), aria: s => s === 'today' ? 'Today' : longDate(s), title: s => s === 'today' ? 'Today' : longDate(s),
@@ -1301,7 +1299,7 @@
     if (host.previousElementSibling && host.previousElementSibling.matches('.mx-legend')) host.previousElementSibling.remove();
     host.insertAdjacentHTML('beforebegin', `<div class="mx-legend">${sw(COLOR.granted, 'Granted')}${sw(COLOR.filed, 'Filed')}${sw(COLOR.not_in_force, 'Not in force')}${sw('', 'No patent record', 'none')}</div>`);
   }
-  ['cv-country', 'cv-country-top'].forEach(id => document.getElementById(id).addEventListener('change', ev => { cv.iso = ev.target.value; drawCountryView(); writeHash(); }));
+  document.getElementById('cv-country-top').addEventListener('change', ev => { cv.iso = ev.target.value; drawCountryView(); writeHash(); });
   /** Product filter lists in the side panel; each opens on click and says how many values are ticked. */
   function drawPf() {
     const host = document.getElementById('cv-pfilters');
