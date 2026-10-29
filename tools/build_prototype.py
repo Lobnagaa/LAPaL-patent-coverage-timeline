@@ -49,6 +49,9 @@ def world():
 def slim(snapshot):
     """Keep only what the prototype reads, to keep the HTML small."""
     keep_rec = ('number', 'status', 'status_raw', 'expiry', 'via', 'how', 'source')
+    # HIV product attributes for the by-country filters (tools/fetch_hiv_attributes.py); optional.
+    attr_path = os.path.join(ROOT, 'data', 'hiv_attributes.json')
+    attrs = json.load(open(attr_path, encoding='utf-8')) if os.path.exists(attr_path) else {'meta': {}, 'entries': {}}
     entries = []
     for e in snapshot['entries']:
         fams = []
@@ -64,9 +67,15 @@ def slim(snapshot):
                                                                for r in c['records']]} for c in f['countries']],
             })
         entries.append({k: e.get(k) for k in ('id', 'url', 'name', 'type', 'therapeutic_areas', 'hiv', 'source', 'preliminary', 'medspal_uuid', 'medspal_product_name')}
-                       | {'families': fams})
-    countries = {k: {'name': c['name'], 'income': c['income'], 'lmic': c['lmic']} for k, c in snapshot['countries'].items()}
+                       | {'families': fams}
+                       | ({'attr': attrs['entries'][e['url']]} if e['url'] in attrs['entries'] else {}))
+    # World Bank regions (data/wb_regions.json, from the LA PrEP licence territories data) for the overview filters.
+    reg_path = os.path.join(ROOT, 'data', 'wb_regions.json')
+    regions = json.load(open(reg_path, encoding='utf-8'))['regions'] if os.path.exists(reg_path) else {}
+    countries = {k: {'name': c['name'], 'income': c['income'], 'lmic': c['lmic'], 'region': regions.get(c.get('iso3'))}
+                 for k, c in snapshot['countries'].items()}
     meta = {k: snapshot['meta'][k] for k in ('generated_at', 'preliminary_disclaimer', 'regions')}
+    meta['hiv_attributes'] = attrs['meta']
     return {'meta': meta, 'countries': countries, 'licences': snapshot.get('licences', []), 'entries': entries}
 
 def logos():

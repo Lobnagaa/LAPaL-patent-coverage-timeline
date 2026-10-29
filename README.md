@@ -24,13 +24,14 @@ screen behaviour, and section 5 on search and AI discoverability.
 |---|---|
 | `src/` | Prototype source (`index.html`, `app.css`, `app.js`; d3 7.9.0, topojson-client 3.1.0) |
 | `tools/build_patents.py` | Builds `data/patents_data.json` from lapal.ch, MedsPaL and Google Patents |
+| `tools/fetch_hiv_attributes.py` | Innovator, indication, phase, class and route of the HIV entries (LAPaL HIV dashboard, else the entry page) → `data/hiv_attributes.json` |
 | `tools/build_prototype.py` | Bundles `dist/LAPaL_patent_coverage_prototype.html` (self-contained) |
 | `tools/build_static.py` | Builds the static, crawlable patent pages |
 | `tools/build_site.py` | Builds `site/` (prototype + static pages) for GitHub Pages |
 | `data/` | Data snapshot, build report, card status review |
 | `site/` | What GitHub Pages serves (`.github/workflows/pages.yml`) |
 
-Rebuild: `build_patents.py` → `build_prototype.py` → `build_site.py`, then push. `build_patents.py`
+Rebuild: `build_patents.py` → `fetch_hiv_attributes.py` → `build_prototype.py` → `build_site.py`, then push. `build_patents.py`
 needs MPP working files that are not in this repository (the LAPaL patent-info workbook and the
 confirmed URL list); the other steps run from what is here.
 

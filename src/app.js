@@ -778,6 +778,25 @@
   // ---------- Landscape by country (HIV, MedsPaL entries; one row per MedsPaL product) ----------
   // Entries that share a MedsPaL product (a compound page and its formulation page) carry the
   // same patent data, so they become one row named after both.
+  // Product attributes for the filters, from the LAPaL HIV dashboard or, failing that, the entry page
+  // (tools/fetch_hiv_attributes.py). A product joins its entries: union of lists, most advanced phase.
+  const HA = D.meta.hiv_attributes || {};
+  const PHASE_ORDER = HA.phase_order || ['Pre-clinical', 'Phase I', 'Phase I/II', 'Phase II', 'Phase II/III', 'Phase III', 'Marketed'];
+  const NOT_STATED = 'Not stated';
+  function productAttr(p) {
+    const as = p.entries.map(e => e.attr).filter(Boolean);
+    const uniq = xs => [...new Set(xs)];
+    const tr = as.some(a => a.treatment), pr = as.some(a => a.prevention);
+    const ph = as.map(a => a.phase).filter(x => PHASE_ORDER.includes(x)).sort((a, b) => PHASE_ORDER.indexOf(b) - PHASE_ORDER.indexOf(a))[0];
+    return {
+      innovators: uniq(as.flatMap(a => a.innovators || [])).sort(),
+      indication: tr && pr ? 'Both' : tr ? 'Treatment' : pr ? 'PrEP' : NOT_STATED,
+      phase: ph || NOT_STATED,
+      classes: uniq(as.flatMap(a => a.classes || [])),
+      routes: uniq(as.flatMap(a => a.routes || [])),
+      sources: uniq(as.map(a => a.source)),
+    };
+  }
   const hivProducts = (() => {
     const by = new Map();
     for (const e of D.entries.filter(e => e.hiv && e.source === 'medspal')) {
@@ -788,15 +807,35 @@
       p.entries.sort((a, b) => (a.type === 'Formulation & regimen' ? 0 : 1) - (b.type === 'Formulation & regimen' ? 0 : 1) || a.name.localeCompare(b.name));
       p.name = p.entries[0].name;
       p.also = p.entries.slice(1).map(e => e.name);
+      p.attr = productAttr(p);
       return p;
     }).sort((a, b) => a.name.localeCompare(b.name));
   })();
+  // Product filters in the side panel (innovator, indication, phase, class, route). An empty set means
+  // "all"; within a filter any ticked value matches, and a product must match every filter in use.
+  const ROUTE_LABEL = HA.route_labels || { PO: 'Oral', SC: 'Subcutaneous', IM: 'Intramuscular', IV: 'Intravenous', VR: 'Vaginal', TD: 'Transdermal' };
+  const IND_LABEL = { Treatment: 'Treatment only', PrEP: 'PrEP (prevention) only', Both: 'Both treatment and PrEP', [NOT_STATED]: NOT_STATED };
+  const byOrder = order => (a, b) => (order.indexOf(a) < 0 ? 99 : order.indexOf(a)) - (order.indexOf(b) < 0 ? 99 : order.indexOf(b)) || a.localeCompare(b);
+  const PF = [
+    { key: 'inn', label: 'Innovator', of: p => p.attr.innovators, sort: (a, b) => a.localeCompare(b) },
+    { key: 'ind', label: 'Indication', of: p => [p.attr.indication], sort: byOrder(Object.keys(IND_LABEL)), name: v => IND_LABEL[v] || v },
+    { key: 'ph', label: 'Most advanced phase', of: p => [p.attr.phase], sort: byOrder([...PHASE_ORDER].reverse().concat(NOT_STATED)) },
+    { key: 'cls', label: 'Drug class', of: p => p.attr.classes, sort: byOrder(HA.class_order || []) },
+    { key: 'rt', label: 'Route of administration', of: p => p.attr.routes, sort: byOrder(Object.keys(ROUTE_LABEL)), name: v => ROUTE_LABEL[v] || v },
+  ];
+  PF.forEach(f => { f.values = [...new Set(hivProducts.flatMap(f.of))].sort(f.sort); f.name = f.name || (v => v); });
+  const cvMatch = p => PF.every(f => !cv.pf[f.key].size || f.of(p).some(v => cv.pf[f.key].has(v)));
+  const cvProducts = () => hivProducts.filter(cvMatch);
+  const cvPfActive = () => PF.filter(f => cv.pf[f.key].size);
+  const cvPfText = () => cvPfActive().map(f => `${f.label}: ${[...cv.pf[f.key]].map(f.name).join(' or ')}`).join('; ');
   // sort: row order; hidden: product keys the user has hidden (kept in the address bar).
   // Status filter in the side panel: which patents count, judged on the selected date.
   const STATUSES = ['granted', 'filed', 'not_in_force'];
   const cvStatusFiltered = () => cv.statuses.size < STATUSES.length;
   const cv = { iso: 'ZA', compound: false, stop: 0, day: null, stops: ['today'], sel: null, sort: 'status', hidden: new Set(),
-    order: [], hiddenFams: new Set(), statuses: new Set(STATUSES) };  // order: product keys for the manual order; hiddenFams: 'productKey|familyId'
+    order: [], hiddenFams: new Set(), statuses: new Set(STATUSES),
+    pf: { inn: new Set(), ind: new Set(), ph: new Set(), cls: new Set(), rt: new Set() },
+    reg: new Set(), inc: new Set() };  // reg / inc: region and income filters of the overview table  // order: product keys for the manual order; hiddenFams: 'productKey|familyId'
   const famKey = (p, f) => p.key + '|' + f.id;
   const SORT_LABEL = { manual: 'your own order', status: 'status (granted first)', product: 'product name', type: 'patent type (in force; families grouped by type)', 'expiry-late': 'expiry date (latest first)', 'expiry-soon': 'expiry date (soonest first)' };
   // Patent types from the most to the least central to the product; anything else after.
@@ -839,7 +878,7 @@
   }
   /** Products shown in the chart for `iso` on `day`, without the rows and families the user hid. */
   function cvRows(iso, day) {
-    const shown = hivProducts.filter(p => !cv.hidden.has(p.key)).map(p => {
+    const shown = cvProducts().filter(p => !cv.hidden.has(p.key)).map(p => {
       const r = { p, ...productIn(p, iso, day) };
       const all = r.fams.length;
       r.fams = r.fams.filter(fx => !cv.hiddenFams.has(famKey(p, fx.f)));
@@ -857,6 +896,7 @@
     const hid = hivProducts.filter(p => cv.hidden.has(p.key)).map(p => p.name);
     const hf = cvHiddenFams();
     const parts = [];
+    if (cvPfActive().length) parts.push(`${cvProducts().length} of ${hivProducts.length} products match your filters (${cvPfText()})`);
     if (cvStatusFiltered()) parts.push('only ' + cvStatusText() + ' patents shown, here and in the overview');
     if (cv.sort !== 'status') parts.push(cv.sort === 'manual' ? 'rows in your own order' : 'rows ordered by ' + SORT_LABEL[cv.sort]);
     if (hid.length) parts.push(`${hid.length} product${hid.length === 1 ? '' : 's'} hidden (${hid.join(', ')})`);
@@ -899,6 +939,7 @@
     cv.day = cv.stop ? cv.stops[cv.stop] : null;
   }
   function drawCountryView() {
+    drawPf(); drawMxFilters();
     const sel = document.getElementById('cv-country');
     const isos = cvCountries();
     if (!isos.includes(cv.iso)) cv.iso = isos.includes('ZA') ? 'ZA' : isos[0];
@@ -933,7 +974,7 @@
     edit.querySelectorAll('[data-unhidef]').forEach(b => b.onclick = () => { cv.hiddenFams.delete(b.dataset.unhidef); drawCvProducts(); writeHash(); });
     edit.querySelector('[data-reset]')?.addEventListener('click', () => {
       cv.hidden.clear(); cv.hiddenFams.clear(); cv.order = []; cv.sort = 'status'; document.getElementById('cv-sort').value = 'status';
-      cv.statuses = new Set(STATUSES); syncStatusBoxes(); drawCountryView(); writeHash();
+      cv.statuses = new Set(STATUSES); syncStatusBoxes(); PF.forEach(f => cv.pf[f.key].clear()); drawCountryView(); writeHash();
     });
     // Licence note: which voluntary licences cover this country, for which products.
     const licNote = document.getElementById('cv-hic-note');
@@ -970,10 +1011,11 @@
         byStatus.length && `${byStatus.length} only with ${STATUSES.filter(k => !cv.statuses.has(k)).map(k => LABEL[k].toLowerCase()).join(' or ')} patents (filtered out)`,
         `${without.length} no patent recorded`].filter(Boolean);
       cvs.innerHTML = `${cv.day ? 'On ' + longDate(cv.day) + ' (projected from expected expiry dates)' : 'As of ' + snapshot()}, of the ${shownRows.length} HIV long-acting products ` +
-        `${cv.hidden.size || cv.hiddenFams.size ? 'shown (after your edits)' : 'on LAPaL with MedsPaL patent data'}, ${parts.slice(0, -1).join(', ')} and ${parts[parts.length - 1]}` +
+        `${cv.hidden.size || cv.hiddenFams.size || cvPfActive().length ? 'shown (after your edits)' : 'on LAPaL with MedsPaL patent data'}, ${parts.slice(0, -1).join(', ')} and ${parts[parts.length - 1]}` +
         (latest ? `. The latest expected expiry of a granted or filed patent shown is ${longDate(latest.exp)} (${esc(latest.r.p.name)}).` : '.');
     }
     const host = document.getElementById('cv-products');
+    if (!shownRows.length) { host.innerHTML = `<p class="panel-empty">No product matches your filters. Untick some values or use "Reset view".</p>`; return; }
     if (!withRec.length) { host.innerHTML = `<p class="panel-empty">No patent record for ${cv.hidden.size ? 'the products shown' : 'these products'} in this country.</p>`; return; }
 
     const width = Math.max(460, host.clientWidth || 900);
@@ -1168,26 +1210,69 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     };
   }
+  const INCOMES = ['Low', 'Lower-middle', 'Upper-middle'];
+  const mxCountries = () => cvCountries().filter(i => !isHic(i) && (!cv.reg.size || cv.reg.has(C[i]?.region)) && (!cv.inc.size || cv.inc.has(C[i]?.income)));
+  const mxFilterText = () => [cv.reg.size && 'Region: ' + [...cv.reg].join(' or '), cv.inc.size && 'Income: ' + [...cv.inc].map(g => g.toLowerCase()).join(' or ')].filter(Boolean).join('; ');
+  /** Region and income filters of the overview table, as on the LA PrEP licence territories page. */
+  function drawMxFilters() {
+    const all = cvCountries().filter(i => !isHic(i));
+    const regions = [...new Set(all.map(i => C[i]?.region).filter(Boolean))].sort();
+    const box = (name, v, label, on) => `<label class="check"><input type="checkbox" name="${name}" value="${esc(v)}"${on ? ' checked' : ''}> ${esc(label)}</label>`;
+    const host = document.getElementById('cv-mx-filters');
+    host.innerHTML = `<fieldset><legend>Region</legend>${regions.map(r => box('mx-reg', r, r, cv.reg.has(r))).join('')}</fieldset>` +
+      `<fieldset><legend>Income group</legend>${INCOMES.map(g => box('mx-inc', g, g + ' income', cv.inc.has(g))).join('')}` +
+      (cv.reg.size || cv.inc.size ? `<button type="button" class="pf-clear" id="mx-clear">Clear region and income filters</button>` : '') + '</fieldset>';
+    host.querySelectorAll('input').forEach(i => i.onchange = () => {
+      const set = i.name === 'mx-reg' ? cv.reg : cv.inc;
+      if (i.checked) set.add(i.value); else set.delete(i.value);
+      drawMxFilters(); drawMatrix(); writeHash();
+    });
+    document.getElementById('mx-clear')?.addEventListener('click', () => { cv.reg.clear(); cv.inc.clear(); drawMxFilters(); drawMatrix(); writeHash(); });
+  }
   function drawMatrix() {
-    const isos = cvCountries().filter(i => !isHic(i));
+    const mxProducts = cvProducts();
+    const isos = mxCountries();
     const rows = isos.map(iso => {
-      const cells = hivProducts.map(p => productIn(p, iso, cv.day).best);
+      const cells = mxProducts.map(p => productIn(p, iso, cv.day).best);
       return { iso, cells, live: cells.filter(s => s === 'granted' || s === 'filed').length };
     }).sort((a, b) => b.live - a.live || cname(a.iso).localeCompare(cname(b.iso)));
-    document.getElementById('cv-matrix-scope').textContent = `${rows.length} countries × ${hivProducts.length} products${cv.compound ? ' · compound patents only' : ''}${cvStatusFiltered() ? ' · ' + cvStatusText() + ' only' : ''}`;
+    document.getElementById('cv-matrix-scope').textContent = `${rows.length} countries × ${mxProducts.length} products${cvPfActive().length ? ' (filtered)' : ''}${cv.compound ? ' · compound patents only' : ''}${cvStatusFiltered() ? ' · ' + cvStatusText() + ' only' : ''}${mxFilterText() ? ' · ' + mxFilterText() : ''}`;
     const short = p => p.name.length > 30 ? p.name.slice(0, 29) + '…' : p.name;
-    const head = `<thead><tr><th class="corner">Country</th>${hivProducts.map(p => `<th title="${esc(p.name + (p.also.length ? ' (also: ' + p.also.join(', ') + ')' : ''))}"><span class="rot"><span>${esc(short(p))}</span></span></th>`).join('')}<th class="count">Products granted / filed</th></tr></thead>`;
+    const head = `<thead><tr><th class="corner">Country</th>${mxProducts.map(p => `<th title="Open the patent map of ${esc(p.name + (p.also.length ? ' (also: ' + p.also.join(', ') + ')' : ''))}"><a class="rot" href="#view=product&amp;entry=${encodeURIComponent(p.entries[0].id)}" data-entry="${esc(p.entries[0].id)}"><span>${esc(short(p))}</span></a></th>`).join('')}<th class="count">Products granted / filed</th></tr></thead>`;
     const body = rows.map(r => `<tr class="${r.iso === cv.iso ? 'selected' : ''}"><th scope="row" data-iso="${r.iso}" title="Open ${esc(cname(r.iso))}">${flag(r.iso)} ${esc(cname(r.iso))}</th>` +
-      r.cells.map((st, k) => `<td class="cell" title="${esc(hivProducts[k].name)} in ${esc(cname(r.iso))}: ${st ? LABEL[st] : cvStatusFiltered() ? 'none ' + esc(cvStatusText()) : 'no patent record'}"><i class="${st ? '' : 'none'}" style="${st ? 'background:' + COLOR[st] : ''}"></i></td>`).join('') +
+      r.cells.map((st, k) => `<td class="cell" title="${esc(mxProducts[k].name)} in ${esc(cname(r.iso))}: ${st ? LABEL[st] : cvStatusFiltered() ? 'none ' + esc(cvStatusText()) : 'no patent record'}"><i class="${st ? '' : 'none'}" style="${st ? 'background:' + COLOR[st] : ''}"></i></td>`).join('') +
       `<td class="count">${r.live}</td></tr>`).join('');
     const host = document.getElementById('cv-matrix');
     host.innerHTML = `<table class="mx">${head}<tbody>${body}</tbody></table>`;
+    host.querySelectorAll('a[data-entry]').forEach(a => a.onclick = ev => {
+      if (ev.metaKey || ev.ctrlKey || ev.shiftKey) return;  // let the browser open a new tab
+      ev.preventDefault(); openEntry(a.dataset.entry); window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    if (!rows.length) host.insertAdjacentHTML('beforeend', '<p class="panel-empty">No country matches the region and income filters.</p>');
     host.querySelectorAll('th[data-iso]').forEach(t => t.onclick = () => { cv.iso = t.dataset.iso; drawCountryView(); document.getElementById('cv-title').scrollIntoView({ behavior: 'smooth', block: 'start' }); });
     const sw = (c, t, cls = '') => `<span class="swatch"><i class="${cls}" style="${c ? 'background:' + c : ''}"></i>${t}</span>`;
     if (host.previousElementSibling && host.previousElementSibling.matches('.mx-legend')) host.previousElementSibling.remove();
     host.insertAdjacentHTML('beforebegin', `<div class="mx-legend">${sw(COLOR.granted, 'Granted')}${sw(COLOR.filed, 'Filed')}${sw(COLOR.not_in_force, 'Not in force')}${sw('', 'No patent record', 'none')}</div>`);
   }
   document.getElementById('cv-country').addEventListener('change', ev => { cv.iso = ev.target.value; drawCountryView(); });
+  /** Product filter lists in the side panel; each opens on click and says how many values are ticked. */
+  function drawPf() {
+    const host = document.getElementById('cv-pfilters');
+    const open = new Set([...host.querySelectorAll('details[open]')].map(d => d.dataset.k));
+    host.innerHTML = PF.map(f => {
+      const n = cv.pf[f.key].size;
+      return `<details class="pf" data-k="${f.key}"${open.has(f.key) ? ' open' : ''}><summary><span>${esc(f.label)}</span><span class="pf-n${n ? ' on' : ''}">${n ? n + ' selected' : 'All'}</span></summary>` +
+        f.values.map(v => `<label class="check"><input type="checkbox" value="${esc(v)}"${cv.pf[f.key].has(v) ? ' checked' : ''}> <span>${esc(f.name(v))}</span>` +
+          `<span class="pf-c">${hivProducts.filter(p => f.of(p).includes(v)).length}</span></label>`).join('') + '</details>';
+    }).join('') + (cvPfActive().length ? `<button type="button" class="pf-clear" id="pf-clear">Clear product filters</button>` : '');
+    host.querySelectorAll('details.pf').forEach(d => d.querySelectorAll('input').forEach(i => i.onchange = () => {
+      const set = cv.pf[d.dataset.k];
+      if (i.checked) set.add(i.value); else set.delete(i.value);
+      drawCountryView(); writeHash();
+    }));
+    document.getElementById('pf-clear')?.addEventListener('click', () => { PF.forEach(f => cv.pf[f.key].clear()); drawCountryView(); writeHash(); });
+    document.getElementById('cv-pf-count').textContent = cvPfActive().length ? `${cvProducts().length} of ${hivProducts.length} products` : `${hivProducts.length} products`;
+  }
   const syncStatusBoxes = () => document.querySelectorAll('#cv-status input').forEach(i => { i.checked = cv.statuses.has(i.value); });
   document.querySelectorAll('#cv-status input').forEach(i => i.addEventListener('change', () => {
     if (i.checked) cv.statuses.add(i.value); else cv.statuses.delete(i.value);
@@ -1333,32 +1418,39 @@
   };
   document.getElementById('x-cv-csv').onclick = () => {
     const rows = [['Country', cname(cv.iso)], ['Date shown', cv.day ? 'Projected to ' + cv.day : 'Today, status as recorded'], ['Scope', cv.compound ? 'Compound patents only' : 'Any patent'],
-      ['Patent statuses shown', cvStatusFiltered() ? cvStatusText() : 'all'], ['Snapshot', snapshot()],
+      ['Patent statuses shown', cvStatusFiltered() ? cvStatusText() : 'all'], ['Product filters', cvPfText() || 'none'], ['Snapshot', snapshot()],
       ['Rows ordered by', SORT_LABEL[cv.sort]], ['Products hidden by user', hivProducts.filter(p => cv.hidden.has(p.key)).map(p => p.name).join('; ') || 'none'],
       ['Patent families hidden by user', cvHiddenFams().map(([, p, f]) => f.wo + ' (' + p.name + ')').join('; ') || 'none'], [],
       ['Product', 'Also listed as', 'Product status on date shown', 'Family (representative)', 'Family description', 'Patent type', 'Patent number', 'Record status (as recorded)', 'Record status on date shown', 'Filing date', 'Expected expiry',
-        'LAPaL page', 'Patent record link (Espacenet)', 'Family link']];
+        'LAPaL page', 'Patent record link (Espacenet)', 'Family link', 'Innovator', 'Indication', 'Most advanced phase', 'Drug class', 'Route', 'Attributes from']];
     // Same rows and order as on screen: hidden products left out, products without a record last.
     const cr = cvRows(cv.iso, cv.day);
     for (const r of [...cr.withRec, ...cr.without]) {
       const p = r.p;
-      if (!r.fams.length) { rows.push([p.name, p.also.join('; '), 'No patent record', '', '', '', '', '', '', '', '', p.entries[0].url]); continue; }
+      if (!r.fams.length) { rows.push([p.name, p.also.join('; '), 'No patent record', '', '', '', '', '', '', '', '', p.entries[0].url, '', '', ...attrCells(p)]); continue; }
       for (const fx of r.fams) for (const rec of fx.records) rows.push([p.name, p.also.join('; '), LABEL[r.best] || '', fx.f.wo, fx.f.description, (fx.f.categories || []).join('; '),
         rec.number || '', rec.status_raw || '', LABEL[statusOf(rec, cv.day)] || '', fx.f.filing || '', rec.expiry || fx.expiry || '',
-        p.entries[0].url, espLink(rec.number), famLink(fx.f)]);
+        p.entries[0].url, espLink(rec.number), famLink(fx.f), ...attrCells(p)]);
     }
     downloadCsv(`lapal-hiv-patents_${slug(cname(cv.iso))}_${cv.day || 'today'}.csv`, rows);
   };
+  function attrCells(p) {
+    const a = p.attr;
+    return [a.innovators.join('; '), IND_LABEL[a.indication] || a.indication, a.phase, a.classes.join(' + '), a.routes.map(r => ROUTE_LABEL[r] || r).join(', '),
+      a.sources.map(x => x === 'HIV dashboard' ? 'LAPaL HIV dashboard' : 'LAPaL entry page').join('; ')];
+  }
   document.getElementById('x-mx-csv').onclick = () => {
-    const isos = cvCountries().filter(i => !isHic(i));
-    const rows = [['Date shown', cv.day ? 'Projected to ' + cv.day : 'Today, status as recorded'], ['Scope', cv.compound ? 'Compound patents only' : 'Any patent'],
+    const isos = mxCountries();
+    const rows = [['Region and income filters', mxFilterText() || 'none'], ['Date shown', cv.day ? 'Projected to ' + cv.day : 'Today, status as recorded'], ['Scope', cv.compound ? 'Compound patents only' : 'Any patent'],
       ['Patent statuses shown', cvStatusFiltered() ? cvStatusText() : 'all'], ['Snapshot', snapshot()], [],
-      ['Country', 'ISO2', 'Income level', ...hivProducts.map(p => p.name), 'Products granted or filed']];
+      ['Product filters', cvPfText() || 'none'], [],
+      ['Country', 'ISO2', 'Region', 'Income level', ...cvProducts().map(p => p.name), 'Products granted or filed']];
     for (const iso of isos) {
-      const cells = hivProducts.map(p => productIn(p, iso, cv.day).best);
-      rows.push([cname(iso), iso, C[iso] ? C[iso].income : '', ...cells.map(s => s ? LABEL[s] : cvStatusFiltered() ? 'None ' + cvStatusText() : 'No record'), cells.filter(s => s === 'granted' || s === 'filed').length]);
+      const cells = cvProducts().map(p => productIn(p, iso, cv.day).best);
+      rows.push([cname(iso), iso, C[iso]?.region || '', C[iso] ? C[iso].income : '', ...cells.map(s => s ? LABEL[s] : cvStatusFiltered() ? 'None ' + cvStatusText() : 'No record'), cells.filter(s => s === 'granted' || s === 'filed').length]);
     }
-    rows.push([], ['Product', 'LAPaL page'], ...hivProducts.map(p => [p.name, p.entries.map(en => en.url).join(' ; ')]));
+    rows.push([], ['Product', 'LAPaL page', 'Innovator', 'Indication', 'Most advanced phase', 'Drug class', 'Route', 'Attributes from'],
+      ...cvProducts().map(p => [p.name, p.entries.map(en => en.url).join(' ; '), ...attrCells(p)]));
     downloadCsv(`lapal-hiv-patents_overview_${cv.day || 'today'}.csv`, rows);
   };
 
@@ -1397,7 +1489,8 @@
     const lines = [`Snapshot ${snapshot()} · Working prototype`];
     if (state.view === 'country') {
       lines.push(`Data: LAPaL entries with MedsPaL patent data (${LAPAL}, ${MEDSPAL}).`);
-      hivProducts.forEach(p => lines.push(`${p.name}: ${p.entries.map(en => en.url).join(' ; ')}`));
+      if (cvPfActive().length) lines.push('Product filters: ' + cvPfText() + '.');
+      cvProducts().forEach(p => lines.push(`${p.name}: ${p.entries.map(en => en.url).join(' ; ')}`));
     } else if (state.entryId) {
       const e = byId.get(state.entryId);
       lines.push(`${e.name}: ${e.url}`, `Data: ${e.source === 'medspal' ? 'MedsPaL (' + MEDSPAL + '), as linked to the LAPaL entry' : 'LAPaL patent cards (preliminary); filing dates from Google Patents'}.`);
@@ -1437,6 +1530,9 @@
       if (cv.hidden.size) p.set('hide', [...cv.hidden].join(','));
       if (cv.sort === 'manual' && cv.order.length) p.set('order', cv.order.join(','));
       if (cv.hiddenFams.size) p.set('hidef', [...cv.hiddenFams].join(','));
+      PF.forEach(f => { if (cv.pf[f.key].size) p.set(f.key, [...cv.pf[f.key]].join('|')); });
+      if (cv.reg.size) p.set('reg', [...cv.reg].join('|'));
+      if (cv.inc.size) p.set('inc', [...cv.inc].join('|'));
       if (cvStatusFiltered()) p.set('st', STATUSES.filter(k => cv.statuses.has(k)).join(','));
     } else {
       p.set('entry', state.entryId);
@@ -1503,6 +1599,9 @@
     document.querySelector(`input[name="cv-scope"][value="${cv.compound ? 'compound' : 'any'}"]`).checked = true;
     const st = (hash.get('st') || '').split(',').filter(k => STATUSES.includes(k));
     cv.statuses = new Set(st.length ? st : STATUSES); syncStatusBoxes();
+    PF.forEach(f => { cv.pf[f.key] = new Set((hash.get(f.key) || '').split('|').filter(v => f.values.includes(v))); });
+    cv.reg = new Set((hash.get('reg') || '').split('|').filter(v => Object.values(C).some(c => c.region === v)));
+    cv.inc = new Set((hash.get('inc') || '').split('|').filter(v => INCOMES.includes(v)));
     cvComputeStops();
     const k = cv.stops.indexOf(hash.get('on'));
     cv.stop = k > 0 ? k : 0; cv.day = cv.stop ? cv.stops[cv.stop] : null;

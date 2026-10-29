@@ -143,6 +143,11 @@
           <p class="filter-note">Status on the date selected above. Same colours as the bars, the map and the overview.</p>
         </fieldset>
         <div class="filter-group">
+          <div class="filter-label">Filter products <span class="pf-count" id="cv-pf-count"></span></div>
+          <div id="cv-pfilters"></div>
+          <p class="filter-note">From the <a href="https://lapal.ch/hiv-dashboard" target="_blank" rel="noopener">LAPaL HIV dashboard</a>; for entries not on it, from their LAPaL entry page.</p>
+        </div>
+        <div class="filter-group">
           <label class="filter-label" for="cv-sort">Order rows by</label>
           <select id="cv-sort">
             <option value="status">Status (granted first)</option>
@@ -165,18 +170,21 @@
           <div class="tl-head"><h2 id="cv-title"></h2><span class="tl-scope" id="cv-scope"></span>
             <div class="exports"><button type="button" id="x-cv-png">Save chart as PNG</button><button type="button" id="x-cv-csv">Download CSV</button><button type="button" class="x-print">Print</button></div></div>
           <div class="edit-note" id="cv-edit-note" role="status" hidden></div>
-          <details class="hic-note fold" id="cv-hic-note" role="note" hidden><summary id="cv-lic-head"></summary><div id="cv-lic-body"></div></details>
-          <details class="fold cv-about"><summary>In words, and how to read this chart</summary>
-            <p class="map-summary" id="cv-summary" aria-live="polite"></p>
-            <p class="tl-note">One row per product. Bars are the patents recorded in this country, from filing to expected expiry, coloured by status on the selected date.</p>
+          <details class="cv-band lic fold" id="cv-hic-note" role="note" hidden><summary><span class="fold-text" id="cv-lic-head"></span></summary><div class="fold-body" id="cv-lic-body"></div></details>
+          <details class="cv-band about fold"><summary><span class="fold-text"><b>In words:</b> summary of this chart and how to read it</span></summary>
+            <div class="fold-body">
+              <p class="map-summary" id="cv-summary" aria-live="polite"></p>
+              <p class="tl-note">One row per product. Bars are the patents recorded in this country, from filing to expected expiry, coloured by status on the selected date.</p>
+            </div>
           </details>
-          <div class="tl-legend cv-legend" id="cv-legend" aria-label="Legend"></div>
+          <div class="tl-legend cv-band cv-legend" id="cv-legend" aria-label="Legend"></div>
           <div class="tl-body" id="cv-products"></div>
         </div>
         <div class="cv-card">
           <div class="tl-head"><h2>Overview across countries</h2><span class="tl-scope" id="cv-matrix-scope"></span>
             <div class="exports"><button type="button" id="x-mx-csv">Download CSV</button><button type="button" class="x-print">Print</button></div></div>
-          <p class="tl-note">Each cell is one product in one country, coloured by its strongest status on the selected date. Click a country to open it above.</p>
+          <p class="tl-note">Each cell is one product in one country, coloured by its strongest status on the selected date. Click a country to open it above, or a product name to open its patent map.</p>
+          <div class="mx-filters" id="cv-mx-filters" aria-label="Filter the overview by region and income group"></div>
           <div class="matrix-wrap" id="cv-matrix"></div>
         </div>
       </div>

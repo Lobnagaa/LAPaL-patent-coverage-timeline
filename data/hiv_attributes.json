@@ -1,0 +1,427 @@
+{
+ "meta": {
+  "fetched_at": "2026-10-29",
+  "dashboard": "https://lapal.ch/hiv-dashboard",
+  "phase_order": [
+   "Pre-clinical",
+   "Phase I",
+   "Phase I/II",
+   "Phase II",
+   "Phase II/III",
+   "Phase III",
+   "Marketed"
+  ],
+  "class_order": [
+   "INSTI",
+   "NRTI",
+   "NRTTI",
+   "NNRTI",
+   "Capsid inhibitor",
+   "PI",
+   "Pharmacokinetic Enhancer/booster",
+   "Fusion inhibitor",
+   "CCR5 antagonist",
+   "gp120 Attachment Inhibitor",
+   "Post-attachment inhibitor",
+   "mAb",
+   "Technology platform"
+  ],
+  "route_labels": {
+   "PO": "Oral",
+   "SC": "Subcutaneous",
+   "IM": "Intramuscular",
+   "IV": "Intravenous",
+   "VR": "Vaginal",
+   "TD": "Transdermal"
+  }
+ },
+ "entries": {
+  "https://lapal.ch/compounds/alimatravir-mk-8527": {
+   "source": "HIV dashboard",
+   "innovators": [
+    "Merck / MSD"
+   ],
+   "treatment": false,
+   "prevention": true,
+   "phase": "Phase III",
+   "on_hold": false,
+   "classes": [
+    "NRTTI"
+   ],
+   "routes": [
+    "PO"
+   ],
+   "name": "Alimatravir MK-8527"
+  },
+  "https://lapal.ch/compounds/bictegravir-bic": {
+   "source": "entry page",
+   "innovators": [
+    "Gilead"
+   ],
+   "treatment": true,
+   "prevention": false,
+   "phase": "Marketed",
+   "phase_basis": "approval text on the entry page",
+   "on_hold": false,
+   "classes": [
+    "INSTI"
+   ],
+   "routes": [
+    "PO"
+   ],
+   "name": "Bictegravir (BIC)"
+  },
+  "https://lapal.ch/compounds/cabotegravir": {
+   "source": "entry page",
+   "innovators": [
+    "ViiV Healthcare"
+   ],
+   "treatment": true,
+   "prevention": true,
+   "phase": "Marketed",
+   "phase_basis": "trial marked Marketed",
+   "on_hold": false,
+   "classes": [
+    "INSTI"
+   ],
+   "routes": [
+    "PO",
+    "IM",
+    "SC"
+   ],
+   "name": "Cabotegravir"
+  },
+  "https://lapal.ch/compounds/dapivirine-dpv": {
+   "source": "entry page",
+   "innovators": [
+    "Johnson & Johnson"
+   ],
+   "treatment": false,
+   "prevention": true,
+   "phase": "Marketed",
+   "phase_basis": "approval text on the entry page",
+   "on_hold": false,
+   "classes": [
+    "NNRTI"
+   ],
+   "routes": [
+    "VR"
+   ],
+   "name": "Dapivirine (DPV)"
+  },
+  "https://lapal.ch/compounds/islatravir-isl": {
+   "source": "entry page",
+   "innovators": [
+    "Merck / MSD"
+   ],
+   "treatment": true,
+   "prevention": false,
+   "phase": "Phase III",
+   "phase_basis": "most advanced trial on the entry page",
+   "on_hold": false,
+   "classes": [
+    "NRTTI"
+   ],
+   "routes": [
+    "PO",
+    "SC"
+   ],
+   "name": "Islatravir (ISL)"
+  },
+  "https://lapal.ch/compounds/lenacapavir-len": {
+   "source": "entry page",
+   "innovators": [
+    "Gilead"
+   ],
+   "treatment": true,
+   "prevention": true,
+   "phase": "Marketed",
+   "phase_basis": "trial marked Marketed",
+   "on_hold": false,
+   "classes": [
+    "Capsid inhibitor"
+   ],
+   "routes": [
+    "PO",
+    "SC",
+    "IM"
+   ],
+   "name": "Lenacapavir (LEN)"
+  },
+  "https://lapal.ch/compounds/lepetegravir-gs-1720": {
+   "source": "HIV dashboard",
+   "innovators": [
+    "Gilead"
+   ],
+   "treatment": true,
+   "prevention": false,
+   "phase": "Phase II/III",
+   "on_hold": false,
+   "classes": [
+    "INSTI"
+   ],
+   "routes": [
+    "PO"
+   ],
+   "name": "lepetegravir (GS-1720)"
+  },
+  "https://lapal.ch/compounds/ulonivirine-mk-8507": {
+   "source": "HIV dashboard",
+   "innovators": [
+    "Merck / MSD"
+   ],
+   "treatment": true,
+   "prevention": true,
+   "phase": "Phase II/III",
+   "on_hold": false,
+   "classes": [
+    "NNRTI"
+   ],
+   "routes": [
+    "PO"
+   ],
+   "name": "ulonivirine (ULO)"
+  },
+  "https://lapal.ch/compounds/vh-499-vh-4011499": {
+   "source": "HIV dashboard",
+   "innovators": [
+    "ViiV Healthcare",
+    "Shionogi"
+   ],
+   "treatment": true,
+   "prevention": true,
+   "phase": "Phase II",
+   "on_hold": false,
+   "classes": [
+    "Capsid inhibitor"
+   ],
+   "routes": [
+    "PO",
+    "SC",
+    "IM"
+   ],
+   "name": "fremocapavir (VH-499)"
+  },
+  "https://lapal.ch/formulations/cab-la-cabotegravir-2-monthly": {
+   "source": "HIV dashboard",
+   "innovators": [
+    "ViiV Healthcare"
+   ],
+   "treatment": true,
+   "prevention": true,
+   "phase": "Marketed",
+   "on_hold": false,
+   "classes": [
+    "INSTI"
+   ],
+   "routes": [
+    "PO",
+    "IM"
+   ],
+   "name": "CAB-LA (Cabotegravir 2-Monthly)"
+  },
+  "https://lapal.ch/formulations/cabotegravir-4-monthly-q4m": {
+   "source": "HIV dashboard",
+   "innovators": [
+    "ViiV Healthcare"
+   ],
+   "treatment": true,
+   "prevention": true,
+   "phase": "Phase III",
+   "on_hold": false,
+   "classes": [
+    "INSTI"
+   ],
+   "routes": [
+    "IM"
+   ],
+   "name": "Cabotegravir 4-Monthly (Q4M)"
+  },
+  "https://lapal.ch/formulations/cabotegravir-lenacapavir": {
+   "source": "HIV dashboard",
+   "innovators": [
+    "ViiV Healthcare",
+    "Gilead"
+   ],
+   "treatment": true,
+   "prevention": false,
+   "phase": "Phase III",
+   "on_hold": false,
+   "classes": [
+    "INSTI",
+    "Capsid inhibitor"
+   ],
+   "routes": [
+    "PO",
+    "SC",
+    "IM"
+   ],
+   "name": "Cabotegravir & Lenacapavir"
+  },
+  "https://lapal.ch/formulations/cabotegravir-rilpivirine": {
+   "source": "HIV dashboard",
+   "innovators": [
+    "ViiV Healthcare",
+    "Johnson & Johnson"
+   ],
+   "treatment": true,
+   "prevention": false,
+   "phase": "Marketed",
+   "on_hold": false,
+   "classes": [
+    "INSTI",
+    "NNRTI"
+   ],
+   "routes": [
+    "PO",
+    "IM"
+   ],
+   "name": "Cabotegravir + Rilpivirine"
+  },
+  "https://lapal.ch/formulations/lenacapavir-6-monthly": {
+   "source": "HIV dashboard",
+   "innovators": [
+    "Gilead"
+   ],
+   "treatment": true,
+   "prevention": true,
+   "phase": "Marketed",
+   "on_hold": false,
+   "classes": [
+    "Capsid inhibitor"
+   ],
+   "routes": [
+    "PO",
+    "SC"
+   ],
+   "name": "Lenacapavir 6-Monthly"
+  },
+  "https://lapal.ch/formulations/lenacapavir-once-yearly": {
+   "source": "HIV dashboard",
+   "innovators": [
+    "Gilead"
+   ],
+   "treatment": false,
+   "prevention": true,
+   "phase": "Phase III",
+   "on_hold": false,
+   "classes": [
+    "Capsid inhibitor"
+   ],
+   "routes": [
+    "IM"
+   ],
+   "name": "Lenacapavir Once-Yearly"
+  },
+  "https://lapal.ch/formulations/mk-8591b-islatravir-ulonivirine": {
+   "source": "HIV dashboard",
+   "innovators": [
+    "Merck / MSD"
+   ],
+   "treatment": true,
+   "prevention": false,
+   "phase": "Phase II/III",
+   "on_hold": false,
+   "classes": [
+    "NRTTI",
+    "NNRTI"
+   ],
+   "routes": [
+    "PO"
+   ],
+   "name": "MK-8591B Islatravir + Ulonivirine"
+  },
+  "https://lapal.ch/formulations/mk-8591d-islatravir-and-lenacapavir": {
+   "source": "HIV dashboard",
+   "innovators": [
+    "Merck / MSD",
+    "Gilead"
+   ],
+   "treatment": true,
+   "prevention": false,
+   "phase": "Phase III",
+   "on_hold": false,
+   "classes": [
+    "NRTTI",
+    "Capsid inhibitor"
+   ],
+   "routes": [
+    "PO"
+   ],
+   "name": "MK-8591D Islatravir + Lenacapavir"
+  },
+  "https://lapal.ch/formulations/rilpivirine-2-monthly": {
+   "source": "entry page",
+   "innovators": [
+    "Johnson & Johnson"
+   ],
+   "treatment": true,
+   "prevention": false,
+   "phase": "Marketed",
+   "phase_basis": "trial marked Marketed",
+   "on_hold": false,
+   "classes": [
+    "NNRTI"
+   ],
+   "routes": [
+    "PO",
+    "IM"
+   ],
+   "name": "Rilpivirine 2-monthly"
+  },
+  "https://lapal.ch/formulations/tenofovir-lamivudine-dolutegravir-tld-long-acting-injectable-lai-tld-lai": {
+   "source": "HIV dashboard",
+   "innovators": [
+    "University of Washington"
+   ],
+   "treatment": true,
+   "prevention": false,
+   "phase": null,
+   "on_hold": false,
+   "classes": [
+    "INSTI",
+    "NRTI"
+   ],
+   "routes": [
+    "SC"
+   ],
+   "name": "Tenofovir-Lamivudine-Dolutegravir (TLD) - long-acting injectable (LAI) (TLD LAI)"
+  },
+  "https://lapal.ch/technology/drug-combination-nanoparticles-dcnp": {
+   "source": "entry page",
+   "innovators": [
+    "University of Washington"
+   ],
+   "treatment": true,
+   "prevention": false,
+   "phase": "Phase I",
+   "phase_basis": "most advanced trial on the entry page",
+   "on_hold": false,
+   "classes": [
+    "Technology platform"
+   ],
+   "routes": [
+    "SC"
+   ],
+   "name": "Drug Combination Nanoparticles (DcNP)"
+  },
+  "https://lapal.ch/technology/extruded-polymer-device-expd": {
+   "source": "entry page",
+   "innovators": [
+    "RTI International"
+   ],
+   "treatment": true,
+   "prevention": true,
+   "phase": "Pre-clinical",
+   "phase_basis": "development stage on the entry page",
+   "on_hold": false,
+   "classes": [
+    "Technology platform"
+   ],
+   "routes": [
+    "SC"
+   ],
+   "name": "Extruded Polymer Device (EXPD)"
+  }
+ }
+}

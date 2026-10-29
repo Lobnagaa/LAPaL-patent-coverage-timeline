@@ -99,6 +99,23 @@ selected country is in the territory; the by-country view lists the licences cov
 The wording always says the licence *may* allow manufacturing and/or sale and points to the licence
 terms.
 
+### 2.4 HIV product attributes (filters of the by-country view)
+
+`tools/fetch_hiv_attributes.py` writes `data/hiv_attributes.json`: innovator, indication, most advanced
+development phase, drug class and route for each HIV entry with MedsPaL data. It reads the dataset that
+https://lapal.ch/hiv-dashboard embeds in its page (`:dataset` attribute), matched on the lapal.ch URL
+(13 of 21 entries). The 8 entries not on the dashboard (bictegravir, cabotegravir, dapivirine,
+islatravir and lenacapavir as compounds, rilpivirine 2-monthly, DcNP, EXPD) are read from their entry
+page: Developer(s), Drug class/category (mapped to the dashboard's class names; technologies get
+"Technology platform"), Use case(s), Administration route, and the phase: "Marketed" when a linked
+trial is marked Marketed or the approval / regulatory text says "approved", else the most advanced
+trial phase, else the technology's "Development stage". On lapal.ch the same fields come from the
+database. A product row joins its entries: lists are merged and the most advanced phase is kept.
+Indication is "Treatment only", "PrEP (prevention) only" or "Both".
+
+Country regions for the overview filter are the World Bank regions used on the LA PrEP licence
+territories page (`data/wb_regions.json`, copied from that page's data).
+
 ## 3. Status rules
 
 | Record status | Map class |
@@ -184,6 +201,19 @@ change shows an "Edited view" notice above the chart that says what changed, wit
 button per hidden product or family and "Reset view". Edits are kept in the address bar (`sort=`, `hide=`), are
 stated in the PNG subtitle and the CSV header ("Rows ordered by", "Products hidden by user",
 "Patent families hidden by user"), and hidden products and families are left out of the chart and its CSV. The country overview grid is not affected.
+
+**Product filters** (side panel, "Filter products"): Innovator, Indication, Most advanced phase,
+Drug class, Route of administration; each is a collapsible checkbox list with the number of products
+per value and "All" / "n selected" on its header. Within a filter any ticked value matches; a product
+must match every filter in use. The filters apply to the chart rows and to the overview table's
+columns, show in the "Edited view" notice, the summary sentence and the counts ("n of 19 products"),
+the address bar (`inn=`, `ind=`, `ph=`, `cls=`, `rt=`, values separated by `|`), the PNG subtitle and
+the CSV headers; both CSVs carry the attribute columns and their source.
+
+**Overview table**: product names in the header link to that product's patent map
+(`#view=product&entry=<entry id>`, the first entry of the product). Region and income-group checkboxes
+above the table (as on the LA PrEP licence territories page) narrow its rows; they are kept in the
+address bar (`reg=`, `inc=`) and stated in its CSV.
 
 **Status filter** (side panel, "Show patents"): three checkboxes, Granted, Filed and Not in force, each
 with its status colour swatch (the same colours as the bars, dots, map and overview grid; an unticked
