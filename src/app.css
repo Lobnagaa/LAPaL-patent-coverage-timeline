@@ -186,7 +186,6 @@ button { font: inherit; }
 .cv-legend { align-items: center; margin-bottom: 10px; }
 .cv-legend > b { color: var(--ink); font-weight: 600; }
 .cv-legend i.ln { width: 0; height: 14px; border-radius: 0; background: none; }
-.cv-legend-note { flex-basis: 100%; }
 
 /* ---- stage 4: view switcher, landscape filters, map/table, by-country view ---- */
 .views { background: var(--surface); border-bottom: 1px solid var(--line); }

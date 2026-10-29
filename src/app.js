@@ -996,8 +996,7 @@
       document.getElementById('cv-legend').innerHTML = '<b>Bars and dots:</b>' +
         [[COLOR.granted, 'Granted'], [COLOR.filed, 'Filed'], [COLOR.not_in_force, 'Not in force']].map(([c, t]) => `<span class="swatch">${sw(c)}${t}</span>`).join('') +
         `<span class="swatch">${ln('var(--ink-2)', true)}Today</span>` +
-        (cv.day ? `<span class="swatch">${ln('var(--accent)')}Selected date</span>` : '') +
-        `<span class="cv-legend-note">The dot before each product shows its potentially last to lapse status in this country.</span>`;
+        (cv.day ? `<span class="swatch">${ln('var(--accent)')}Selected date</span>` : '');
     }
     const cvs = document.getElementById('cv-summary');
     {
@@ -1047,7 +1046,9 @@
       link.append('text').attr('class', 'fam-label').attr('x', 22).attr('y', r.y + 16).attr('font-weight', 600).text(nm);
       g.append('text').attr('class', 'fam-sub').attr('x', 22).attr('y', r.y + 30)
         .text(`${r.best ? LABEL[r.best] : 'Unknown'} · ${r.fams.length} famil${r.fams.length === 1 ? 'y' : 'ies'}${r.famsHidden ? ` (+${r.famsHidden} hidden)` : ''}`);
-      g.append('circle').attr('cx', 12).attr('cy', r.y + 12).attr('r', 5).attr('fill', r.best ? COLOR[r.best] : 'var(--none-lmic)');
+      // The dot's meaning is a hover note rather than a legend line.
+      g.append('circle').attr('cx', 12).attr('cy', r.y + 12).attr('r', 5).attr('fill', r.best ? COLOR[r.best] : 'var(--none-lmic)')
+        .append('title').text(`Potentially last to lapse status of ${r.p.name} in ${cname(cv.iso)}: ${r.best ? LABEL[r.best] : 'none'}`);
       g.append('title').text(`${r.p.name}${r.p.also.length ? ' (also: ' + r.p.also.join(', ') + ')' : ''}\nClick the name to open its patent view`);
       // Grip (drag to reorder; Alt+↑/↓ from the keyboard) and eye (hide), as on the LAPaL HIV
       // dashboard: faint until the row is hovered or focused.
