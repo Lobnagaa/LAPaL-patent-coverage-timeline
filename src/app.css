@@ -138,10 +138,14 @@ button { font: inherit; }
 .toggle label { display: inline-flex; gap: 6px; align-items: center; cursor: pointer; color: var(--ink-2); }
 .toggle input { accent-color: var(--accent); margin: 0; }
 
-.asof { font-size: 12px; color: var(--ink-2); margin: 0 0 6px; min-height: 18px; }
-.asof b { color: var(--ink); }
-.asof.future { color: #23306e; }
-.asof.future b { color: var(--navy); }
+.asof { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; font-size: 12px; color: var(--ink-2); margin: 0 0 8px; min-height: 22px; }
+.asof-pill { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 999px; background: var(--page); border: 1px solid var(--line);
+  font-size: 12.5px; color: var(--ink-2); white-space: nowrap; }
+.asof-pill b { color: var(--ink); }
+.asof-pill.future { background: #E9EBF6; border-color: #c9cde8; color: var(--navy); }
+.asof-pill.future b { color: var(--navy); }
+.asof-note { color: var(--muted); }
+.asof .focus-note { flex-basis: 100%; }
 
 .slider { display: flex; align-items: center; gap: 8px; padding: 8px 2px 2px; }
 .slider .arrow { flex: none; width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--line); background: #fff;

@@ -198,16 +198,17 @@
       }
     }
     const fam = state.famFocus ? e.families.find(f => f.id === state.famFocus) : null;
-    const when = state.day ? `From ${longDate(state.day)} (projected from expected expiry dates)` : `As of ${snapshot()}`;
+    // The date is in the pill just above (#asof, also read out via aria-describedby), so it is not repeated here.
+    const cap = t => t.replace(/^(<b>)?(.)/, (m, b, c) => (b || '') + c.toUpperCase());
     const what = (fam ? `patent family ${esc(fam.wo)} of <b>${esc(e.name)}</b>` : `<b>${esc(e.name)}</b>`) + (state.compoundOnly ? ' (compound patents only)' : '');
     const src = e.source === 'medspal' ? 'MedsPaL' : 'LAPaL patent cards (preliminary data)';
     let text;
-    if (!n.granted && !n.filed && !n.not_in_force) text = `${when}, ${src} records no patent status for ${what} in any low- or middle-income country.`;
-    else if (!n.granted && !n.filed) text = `${when}, ${what} has no granted or filed patent in any low- or middle-income country; patents are no longer in force in ${plural(n.not_in_force, 'country', 'countries')} (${src}).`;
+    if (!n.granted && !n.filed && !n.not_in_force) text = `${src} records no patent status for ${what} in any low- or middle-income country.`;
+    else if (!n.granted && !n.filed) text = `${cap(what)} has no granted or filed patent in any low- or middle-income country; patents are no longer in force in ${plural(n.not_in_force, 'country', 'countries')} (${src}).`;
     else {
       const lmic = k => plural(k, 'low- or middle-income country', 'low- and middle-income countries');
       const parts = [n.granted ? `<b>granted in ${lmic(n.granted)}</b>` : '', n.filed ? `<b>filed (pending) in ${n.granted ? n.filed : lmic(n.filed)}</b>` : ''].filter(Boolean);
-      text = `${when}, ${what} has patents ${parts.join(' and ')}` + (n.not_in_force ? `; in ${n.not_in_force} more, they are no longer in force` : '') + ` (${src}).` +
+      text = `${cap(what)} has patents ${parts.join(' and ')}` + (n.not_in_force ? `; in ${n.not_in_force} more, they are no longer in force` : '') + ` (${src}).` +
       (latest ? ` The latest expected expiry of a granted or filed patent is <b>${longDate(latest)}</b>.` : '');
     }
     const lic = licencesFor(e.id);
@@ -469,14 +470,19 @@
     });
     el.querySelectorAll('.arrow').forEach(b => b.onclick = () => onPick(Math.max(0, Math.min(n, active + +b.dataset.step))));
   }
+  /** Date line above a map or chart: a pill with the date shown, then one short caveat. */
+  function asofHtml(day, from, src) {
+    return day
+      ? `<span class="asof-pill future">${from ? 'From' : 'On'} <b>${longDate(day)}</b> · ${fromTodayText(day)}</span>` +
+        `<span class="asof-note">Projected: patents past their expected expiry show as not in force; no other change in status is assumed.</span>`
+      : `<span class="asof-pill"><b>Today</b> · data snapshot ${snapshot()}</span><span class="asof-note">Status as recorded in ${src}.</span>`;
+  }
   function drawAsOf() {
     const e = byId.get(state.entryId);
     const src = e.source === 'medspal' ? 'MedsPaL' : 'the LAPaL patent card';
     const el = document.getElementById('asof');
     el.classList.toggle('future', !!state.day);
-    el.innerHTML = state.day
-      ? `Showing <b>from ${longDate(state.day)}</b> (${fromTodayText(state.day)}): patents expected to have expired by then are shown as not in force. Projection from expected expiry dates only; it assumes no other change in status.`
-      : `Showing <b>today</b>: status as recorded in ${src}.`;
+    el.innerHTML = asofHtml(state.day, true, src);
     if (state.famFocus) {
       const f = e.families.find(x => x.id === state.famFocus);
       el.insertAdjacentHTML('beforeend', `<div class="focus-note">Showing one patent family only: <b>${esc(f ? f.wo : '')}</b> — ${esc(f ? f.description : '')} ` +
@@ -967,9 +973,7 @@
     sel.value = cv.iso;
     const top = document.getElementById('cv-country-top');
     top.innerHTML = sel.innerHTML; top.value = cv.iso;
-    document.getElementById('cv-asof').innerHTML = cv.day
-      ? `Showing <b>on ${longDate(cv.day)}</b> (${fromTodayText(cv.day)}): patents expected to have expired by then are shown as not in force. Projection from expected expiry dates only.`
-      : `Showing <b>today</b>: status as recorded in MedsPaL.`;
+    document.getElementById('cv-asof').innerHTML = asofHtml(cv.day, false, 'MedsPaL');
     renderSlider(document.getElementById('cv-slider'), cv.stops, cv.stop, i => { cv.stop = i; cv.day = i ? cv.stops[i] : null; drawCountryView(); writeHash(); }, {
       active: s => s === 'today' ? 'Today' : longDate(s), aria: s => s === 'today' ? 'Today' : longDate(s), title: s => s === 'today' ? 'Today' : longDate(s),
     });

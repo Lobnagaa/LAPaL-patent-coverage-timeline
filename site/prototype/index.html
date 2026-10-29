@@ -145,10 +145,14 @@ button { font: inherit; }
 .toggle label { display: inline-flex; gap: 6px; align-items: center; cursor: pointer; color: var(--ink-2); }
 .toggle input { accent-color: var(--accent); margin: 0; }
 
-.asof { font-size: 12px; color: var(--ink-2); margin: 0 0 6px; min-height: 18px; }
-.asof b { color: var(--ink); }
-.asof.future { color: #23306e; }
-.asof.future b { color: var(--navy); }
+.asof { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; font-size: 12px; color: var(--ink-2); margin: 0 0 8px; min-height: 22px; }
+.asof-pill { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; border-radius: 999px; background: var(--page); border: 1px solid var(--line);
+  font-size: 12.5px; color: var(--ink-2); white-space: nowrap; }
+.asof-pill b { color: var(--ink); }
+.asof-pill.future { background: #E9EBF6; border-color: #c9cde8; color: var(--navy); }
+.asof-pill.future b { color: var(--navy); }
+.asof-note { color: var(--muted); }
+.asof .focus-note { flex-basis: 100%; }
 
 .slider { display: flex; align-items: center; gap: 8px; padding: 8px 2px 2px; }
 .slider .arrow { flex: none; width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--line); background: #fff;
@@ -599,7 +603,7 @@ table.mx thead th a.rot:focus-visible { outline: 2px solid var(--accent); }
              The static pages (tools/build_static.py) open with the same sentences. -->
         <p class="map-summary" id="map-summary" aria-live="polite"></p>
         <div class="map-wrap" id="map-wrap">
-          <svg id="map" role="img" aria-label="World map of patent status by country" aria-describedby="map-summary"></svg>
+          <svg id="map" role="img" aria-label="World map of patent status by country" aria-describedby="asof map-summary"></svg>
           <div class="zoom">
             <button type="button" id="zoom-in" aria-label="Zoom in">+</button>
             <button type="button" id="zoom-out" aria-label="Zoom out">−</button>
@@ -924,16 +928,17 @@ table.mx thead th a.rot:focus-visible { outline: 2px solid var(--accent); }
       }
     }
     const fam = state.famFocus ? e.families.find(f => f.id === state.famFocus) : null;
-    const when = state.day ? `From ${longDate(state.day)} (projected from expected expiry dates)` : `As of ${snapshot()}`;
+    // The date is in the pill just above (#asof, also read out via aria-describedby), so it is not repeated here.
+    const cap = t => t.replace(/^(<b>)?(.)/, (m, b, c) => (b || '') + c.toUpperCase());
     const what = (fam ? `patent family ${esc(fam.wo)} of <b>${esc(e.name)}</b>` : `<b>${esc(e.name)}</b>`) + (state.compoundOnly ? ' (compound patents only)' : '');
     const src = e.source === 'medspal' ? 'MedsPaL' : 'LAPaL patent cards (preliminary data)';
     let text;
-    if (!n.granted && !n.filed && !n.not_in_force) text = `${when}, ${src} records no patent status for ${what} in any low- or middle-income country.`;
-    else if (!n.granted && !n.filed) text = `${when}, ${what} has no granted or filed patent in any low- or middle-income country; patents are no longer in force in ${plural(n.not_in_force, 'country', 'countries')} (${src}).`;
+    if (!n.granted && !n.filed && !n.not_in_force) text = `${src} records no patent status for ${what} in any low- or middle-income country.`;
+    else if (!n.granted && !n.filed) text = `${cap(what)} has no granted or filed patent in any low- or middle-income country; patents are no longer in force in ${plural(n.not_in_force, 'country', 'countries')} (${src}).`;
     else {
       const lmic = k => plural(k, 'low- or middle-income country', 'low- and middle-income countries');
       const parts = [n.granted ? `<b>granted in ${lmic(n.granted)}</b>` : '', n.filed ? `<b>filed (pending) in ${n.granted ? n.filed : lmic(n.filed)}</b>` : ''].filter(Boolean);
-      text = `${when}, ${what} has patents ${parts.join(' and ')}` + (n.not_in_force ? `; in ${n.not_in_force} more, they are no longer in force` : '') + ` (${src}).` +
+      text = `${cap(what)} has patents ${parts.join(' and ')}` + (n.not_in_force ? `; in ${n.not_in_force} more, they are no longer in force` : '') + ` (${src}).` +
       (latest ? ` The latest expected expiry of a granted or filed patent is <b>${longDate(latest)}</b>.` : '');
     }
     const lic = licencesFor(e.id);
@@ -1195,14 +1200,19 @@ table.mx thead th a.rot:focus-visible { outline: 2px solid var(--accent); }
     });
     el.querySelectorAll('.arrow').forEach(b => b.onclick = () => onPick(Math.max(0, Math.min(n, active + +b.dataset.step))));
   }
+  /** Date line above a map or chart: a pill with the date shown, then one short caveat. */
+  function asofHtml(day, from, src) {
+    return day
+      ? `<span class="asof-pill future">${from ? 'From' : 'On'} <b>${longDate(day)}</b> · ${fromTodayText(day)}</span>` +
+        `<span class="asof-note">Projected: patents past their expected expiry show as not in force; no other change in status is assumed.</span>`
+      : `<span class="asof-pill"><b>Today</b> · data snapshot ${snapshot()}</span><span class="asof-note">Status as recorded in ${src}.</span>`;
+  }
   function drawAsOf() {
     const e = byId.get(state.entryId);
     const src = e.source === 'medspal' ? 'MedsPaL' : 'the LAPaL patent card';
     const el = document.getElementById('asof');
     el.classList.toggle('future', !!state.day);
-    el.innerHTML = state.day
-      ? `Showing <b>from ${longDate(state.day)}</b> (${fromTodayText(state.day)}): patents expected to have expired by then are shown as not in force. Projection from expected expiry dates only; it assumes no other change in status.`
-      : `Showing <b>today</b>: status as recorded in ${src}.`;
+    el.innerHTML = asofHtml(state.day, true, src);
     if (state.famFocus) {
       const f = e.families.find(x => x.id === state.famFocus);
       el.insertAdjacentHTML('beforeend', `<div class="focus-note">Showing one patent family only: <b>${esc(f ? f.wo : '')}</b> — ${esc(f ? f.description : '')} ` +
@@ -1693,9 +1703,7 @@ table.mx thead th a.rot:focus-visible { outline: 2px solid var(--accent); }
     sel.value = cv.iso;
     const top = document.getElementById('cv-country-top');
     top.innerHTML = sel.innerHTML; top.value = cv.iso;
-    document.getElementById('cv-asof').innerHTML = cv.day
-      ? `Showing <b>on ${longDate(cv.day)}</b> (${fromTodayText(cv.day)}): patents expected to have expired by then are shown as not in force. Projection from expected expiry dates only.`
-      : `Showing <b>today</b>: status as recorded in MedsPaL.`;
+    document.getElementById('cv-asof').innerHTML = asofHtml(cv.day, false, 'MedsPaL');
     renderSlider(document.getElementById('cv-slider'), cv.stops, cv.stop, i => { cv.stop = i; cv.day = i ? cv.stops[i] : null; drawCountryView(); writeHash(); }, {
       active: s => s === 'today' ? 'Today' : longDate(s), aria: s => s === 'today' ? 'Today' : longDate(s), title: s => s === 'today' ? 'Today' : longDate(s),
     });
