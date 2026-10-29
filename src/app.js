@@ -416,6 +416,18 @@
   /** AccessPaL-style stepper shared by the entry and country views. Stops are evenly spaced:
    *  expiry dates cluster in a few years, and real-time spacing made them impossible to click.
    *  Timelines elsewhere keep real time. `stopsArr[0]` is always 'today'. */
+  /** Time from today to an ISO date, in whole years and months: [years, months]. */
+  function fromToday(iso) {
+    const a = new Date(TODAY + 'T00:00:00Z'), b = new Date(iso + 'T00:00:00Z');
+    let m = (b.getUTCFullYear() - a.getUTCFullYear()) * 12 + (b.getUTCMonth() - a.getUTCMonth());
+    if (b.getUTCDate() < a.getUTCDate()) m -= 1;
+    return [Math.floor(Math.max(0, m) / 12), Math.max(0, m) % 12];
+  }
+  const yrs = n => `${n} year${n === 1 ? '' : 's'}`;
+  function fromTodayText(iso) {
+    const [y, m] = fromToday(iso);
+    return !y && !m ? 'less than a month from today' : [y && yrs(y), m && `${m} month${m === 1 ? '' : 's'}`].filter(Boolean).join(', ') + ' from today';
+  }
   function renderSlider(el, stopsArr, active, onPick, fmt) {
     const n = stopsArr.length - 1;
     const posOf = i => (i / n) * 100;
@@ -442,6 +454,8 @@
       ${stopsArr.map((s, i) => `<button type="button" class="slider-stop${i === active ? ' active' : ''}" style="left:${posOf(i)}%"
           data-i="${i}" aria-label="${esc(fmt.aria(s))}" aria-pressed="${i === active}" title="${esc(fmt.title(s))}"></button>`).join('')}
       ${[...shown].map(i => `<button type="button" class="slider-label${i === active ? ' active' : ''}" data-i="${i}" tabindex="-1" style="left:${labelPos(i)}%" title="${esc(fmt.title(stopsArr[i]))}">${esc(i === active ? fmt.active(stopsArr[i]) : short(stopsArr[i]))}</button>`).join('')}
+      ${[...shown].filter(i => i > 0).map(i => `<span class="slider-ago${i === active ? ' active' : ''}" style="left:${labelPos(i)}%" aria-hidden="true">` +
+        `+${fromToday(stopsArr[i])[0] || '&lt;1'} y</span>`).join('')}
       </div>
       <button type="button" class="arrow" data-step="1" aria-label="Later date" ${active === n ? 'disabled' : ''}>›</button>`;
     const pick = i => { onPick(Math.max(0, Math.min(n, i))); el.querySelector('.slider-stop.active')?.focus(); };
@@ -461,7 +475,7 @@
     const el = document.getElementById('asof');
     el.classList.toggle('future', !!state.day);
     el.innerHTML = state.day
-      ? `Showing <b>from ${longDate(state.day)}</b>: patents expected to have expired by then are shown as not in force. Projection from expected expiry dates only; it assumes no other change in status.`
+      ? `Showing <b>from ${longDate(state.day)}</b> (${fromTodayText(state.day)}): patents expected to have expired by then are shown as not in force. Projection from expected expiry dates only; it assumes no other change in status.`
       : `Showing <b>today</b>: status as recorded in ${src}.`;
     if (state.famFocus) {
       const f = e.families.find(x => x.id === state.famFocus);
@@ -952,7 +966,7 @@
     sel.innerHTML = isos.map(opt).join('');
     sel.value = cv.iso;
     document.getElementById('cv-asof').innerHTML = cv.day
-      ? `Showing <b>on ${longDate(cv.day)}</b>: patents expected to have expired by then are shown as not in force. Projection from expected expiry dates only.`
+      ? `Showing <b>on ${longDate(cv.day)}</b> (${fromTodayText(cv.day)}): patents expected to have expired by then are shown as not in force. Projection from expected expiry dates only.`
       : `Showing <b>today</b>: status as recorded in MedsPaL.`;
     renderSlider(document.getElementById('cv-slider'), cv.stops, cv.stop, i => { cv.stop = i; cv.day = i ? cv.stops[i] : null; drawCountryView(); writeHash(); }, {
       active: s => s === 'today' ? 'Today' : longDate(s), aria: s => s === 'today' ? 'Today' : longDate(s), title: s => s === 'today' ? 'Today' : longDate(s),

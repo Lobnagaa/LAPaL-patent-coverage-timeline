@@ -147,7 +147,10 @@ button { font: inherit; }
 .slider .arrow { flex: none; width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--line); background: #fff;
   color: var(--navy); cursor: pointer; font-weight: 700; }
 .slider .arrow:disabled { opacity: .35; cursor: default; }
-.slider-track { position: relative; flex: 1; height: 58px; min-width: 0; }
+.slider-track { position: relative; flex: 1; height: 74px; min-width: 0; }
+/* Under the stops: how far each labelled date is from today (in full under the selected one). */
+.slider-ago { position: absolute; top: 52px; transform: translateX(-50%); font-size: 11px; color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.slider-ago.active { color: var(--navy); font-weight: 700; }
 .slider-line { position: absolute; left: 0; right: 0; top: 34px; height: 3px; background: var(--navy); border-radius: 2px; }
 .slider-stop { position: absolute; top: 27px; width: 17px; height: 17px; margin-left: -8.5px; border-radius: 50%;
   border: 3px solid var(--navy); background: #fff; cursor: pointer; padding: 0; }
