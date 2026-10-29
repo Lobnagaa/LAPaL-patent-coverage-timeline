@@ -158,9 +158,11 @@
           <div class="tl-head"><h2 id="cv-title"></h2><span class="tl-scope" id="cv-scope"></span>
             <div class="exports"><button type="button" id="x-cv-png">Save chart as PNG</button><button type="button" id="x-cv-csv">Download CSV</button><button type="button" class="x-print">Print</button></div></div>
           <div class="edit-note" id="cv-edit-note" role="status" hidden></div>
-          <div class="hic-note" id="cv-hic-note" role="note" hidden></div>
-          <p class="tl-note">One row per product. Bars are the patents recorded in this country, from filing to expected expiry, coloured by status on the selected date.</p>
-          <p class="map-summary" id="cv-summary" aria-live="polite"></p>
+          <details class="hic-note fold" id="cv-hic-note" role="note" hidden><summary id="cv-lic-head"></summary><div id="cv-lic-body"></div></details>
+          <details class="fold cv-about"><summary>In words, and how to read this chart</summary>
+            <p class="map-summary" id="cv-summary" aria-live="polite"></p>
+            <p class="tl-note">One row per product. Bars are the patents recorded in this country, from filing to expected expiry, coloured by status on the selected date.</p>
+          </details>
           <div class="tl-legend cv-legend" id="cv-legend" aria-label="Legend"></div>
           <div class="tl-body" id="cv-products"></div>
         </div>

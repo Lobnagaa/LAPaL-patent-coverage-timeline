@@ -931,8 +931,12 @@
       const ps = hivProducts.filter(p => p.entries.some(en => l.entries.includes(en.id))).map(p => p.name);
       return `<b>${esc(l.label)}</b> (${esc(l.licensor)}, ${esc(l.type)}${ps.length ? '; ' + esc(ps.join(', ')) : ''})`;
     });
+    // Folded to one line by default; the open/closed state is kept while the country changes.
+    const licNames = LIC.filter(l => l.territory[iso]).map(l => esc(l.label));
     licNote.hidden = !inTerr.length;
-    licNote.innerHTML = inTerr.length ? `<span aria-hidden="true">🤝</span> <b>Voluntary licences:</b> ${esc(cname(iso))} is in the territory of ${inTerr.join('; ')}. ` +
+    document.getElementById('cv-lic-head').innerHTML = inTerr.length ? `<span aria-hidden="true">🤝</span> <b>Voluntary licences:</b> ${esc(cname(iso))} is in the territory of ` +
+      `${licNames.length} licence${licNames.length === 1 ? '' : 's'} (${licNames.join(', ')})` : '';
+    document.getElementById('cv-lic-body').innerHTML = inTerr.length ? `${inTerr.join('; ')}. ` +
       `These licences ${LIC_MAY}, whatever the patent status shown; check the licence terms.` : '';
     // Legend above the chart: bar and dot colours, plus the date lines.
     {
@@ -1375,6 +1379,11 @@
       families(e).forEach(f => lines.push(`${f.wo}: ${famLink(f)}`));
     }
     document.getElementById('print-sources').innerHTML = '<p><b>Sources</b></p>' + lines.map(l => `<p>${esc(l)}</p>`).join('');
+    // Folded notes print open, then go back to how the reader left them.
+    document.querySelectorAll('details.fold:not([open])').forEach(d => { d.open = true; d.dataset.printOpened = '1'; });
+  });
+  window.addEventListener('afterprint', () => {
+    document.querySelectorAll('details.fold[data-print-opened]').forEach(d => { d.open = false; delete d.dataset.printOpened; });
   });
 
   // ---------- views ----------

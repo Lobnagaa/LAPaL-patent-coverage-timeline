@@ -362,6 +362,15 @@ table.if tr.if-detail .tags button.tag:hover { background: #fff; color: #6E1C50;
 /* ---- high-income countries: MedsPaL coverage caveat ---- */
 .hic-note { margin: 8px 0 4px; padding: 8px 12px; background: #F1F2F8; border-left: 4px solid var(--nif); border-radius: 4px; font-size: 13px; color: #2a2f55; }
 .hic-note[hidden] { display: none; }
+/* Folded notes in the by-country view: one line, click to open. */
+details.fold > summary { cursor: pointer; list-style: none; }
+details.fold > summary::-webkit-details-marker { display: none; }
+details.fold > summary::after { content: ' ▸ more'; color: var(--muted); font-size: 12px; white-space: nowrap; }
+details.fold[open] > summary::after { content: ' ▾ less'; }
+details.fold > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+details.fold[open] > summary + * { margin-top: 6px; }
+.cv-about { margin: 6px 0 4px; font-size: 13px; color: var(--ink-2); }
+.cv-about > summary { color: var(--ink-2); }
 
 /* Voluntary licence notes (CAB, LEN, alimatravir) */
 .licence-note { margin: 0 0 12px; padding: 10px 14px;
@@ -574,9 +583,11 @@ table.if tr.if-detail .tags button.tag:hover { background: #fff; color: #6E1C50;
           <div class="tl-head"><h2 id="cv-title"></h2><span class="tl-scope" id="cv-scope"></span>
             <div class="exports"><button type="button" id="x-cv-png">Save chart as PNG</button><button type="button" id="x-cv-csv">Download CSV</button><button type="button" class="x-print">Print</button></div></div>
           <div class="edit-note" id="cv-edit-note" role="status" hidden></div>
-          <div class="hic-note" id="cv-hic-note" role="note" hidden></div>
-          <p class="tl-note">One row per product. Bars are the patents recorded in this country, from filing to expected expiry, coloured by status on the selected date.</p>
-          <p class="map-summary" id="cv-summary" aria-live="polite"></p>
+          <details class="hic-note fold" id="cv-hic-note" role="note" hidden><summary id="cv-lic-head"></summary><div id="cv-lic-body"></div></details>
+          <details class="fold cv-about"><summary>In words, and how to read this chart</summary>
+            <p class="map-summary" id="cv-summary" aria-live="polite"></p>
+            <p class="tl-note">One row per product. Bars are the patents recorded in this country, from filing to expected expiry, coloured by status on the selected date.</p>
+          </details>
           <div class="tl-legend cv-legend" id="cv-legend" aria-label="Legend"></div>
           <div class="tl-body" id="cv-products"></div>
         </div>
@@ -1533,8 +1544,12 @@ table.if tr.if-detail .tags button.tag:hover { background: #fff; color: #6E1C50;
       const ps = hivProducts.filter(p => p.entries.some(en => l.entries.includes(en.id))).map(p => p.name);
       return `<b>${esc(l.label)}</b> (${esc(l.licensor)}, ${esc(l.type)}${ps.length ? '; ' + esc(ps.join(', ')) : ''})`;
     });
+    // Folded to one line by default; the open/closed state is kept while the country changes.
+    const licNames = LIC.filter(l => l.territory[iso]).map(l => esc(l.label));
     licNote.hidden = !inTerr.length;
-    licNote.innerHTML = inTerr.length ? `<span aria-hidden="true">🤝</span> <b>Voluntary licences:</b> ${esc(cname(iso))} is in the territory of ${inTerr.join('; ')}. ` +
+    document.getElementById('cv-lic-head').innerHTML = inTerr.length ? `<span aria-hidden="true">🤝</span> <b>Voluntary licences:</b> ${esc(cname(iso))} is in the territory of ` +
+      `${licNames.length} licence${licNames.length === 1 ? '' : 's'} (${licNames.join(', ')})` : '';
+    document.getElementById('cv-lic-body').innerHTML = inTerr.length ? `${inTerr.join('; ')}. ` +
       `These licences ${LIC_MAY}, whatever the patent status shown; check the licence terms.` : '';
     // Legend above the chart: bar and dot colours, plus the date lines.
     {
@@ -1977,6 +1992,11 @@ table.if tr.if-detail .tags button.tag:hover { background: #fff; color: #6E1C50;
       families(e).forEach(f => lines.push(`${f.wo}: ${famLink(f)}`));
     }
     document.getElementById('print-sources').innerHTML = '<p><b>Sources</b></p>' + lines.map(l => `<p>${esc(l)}</p>`).join('');
+    // Folded notes print open, then go back to how the reader left them.
+    document.querySelectorAll('details.fold:not([open])').forEach(d => { d.open = true; d.dataset.printOpened = '1'; });
+  });
+  window.addEventListener('afterprint', () => {
+    document.querySelectorAll('details.fold[data-print-opened]').forEach(d => { d.open = false; delete d.dataset.printOpened; });
   });
 
   // ---------- views ----------

@@ -355,6 +355,15 @@ table.if tr.if-detail .tags button.tag:hover { background: #fff; color: #6E1C50;
 /* ---- high-income countries: MedsPaL coverage caveat ---- */
 .hic-note { margin: 8px 0 4px; padding: 8px 12px; background: #F1F2F8; border-left: 4px solid var(--nif); border-radius: 4px; font-size: 13px; color: #2a2f55; }
 .hic-note[hidden] { display: none; }
+/* Folded notes in the by-country view: one line, click to open. */
+details.fold > summary { cursor: pointer; list-style: none; }
+details.fold > summary::-webkit-details-marker { display: none; }
+details.fold > summary::after { content: ' ▸ more'; color: var(--muted); font-size: 12px; white-space: nowrap; }
+details.fold[open] > summary::after { content: ' ▾ less'; }
+details.fold > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+details.fold[open] > summary + * { margin-top: 6px; }
+.cv-about { margin: 6px 0 4px; font-size: 13px; color: var(--ink-2); }
+.cv-about > summary { color: var(--ink-2); }
 
 /* Voluntary licence notes (CAB, LEN, alimatravir) */
 .licence-note { margin: 0 0 12px; padding: 10px 14px;
