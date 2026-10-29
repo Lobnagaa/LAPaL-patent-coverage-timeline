@@ -14,14 +14,26 @@ import argparse, datetime as dt, html, json, os, shutil, subprocess, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = os.path.join(ROOT, 'site')
-REPO = 'lapal-patent-coverage'
-OWNER = 'Lobnagaa'
+OWNER, REPO = 'Lobnagaa', 'LAPaL-patent-coverage-timeline'
+
+
+def repo_from_git():
+    """Owner and name of the GitHub repository from the 'origin' remote (GitHub Desktop names it after
+    the folder), so the Pages path always matches the published repository."""
+    try:
+        url = subprocess.run(['git', '-C', ROOT, 'remote', 'get-url', 'origin'], capture_output=True, text=True, check=True).stdout.strip()
+        owner, name = url.rstrip('/').removesuffix('.git').split('github.com')[-1].lstrip(':/').split('/')[:2]
+        return owner, name
+    except Exception:
+        return OWNER, REPO
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--public', action='store_true', help='let search engines index the pages')
     args = ap.parse_args()
+    global OWNER, REPO
+    OWNER, REPO = repo_from_git()
     if os.path.exists(SITE):
         shutil.rmtree(SITE)
     cmd = [sys.executable, os.path.join(ROOT, 'tools', 'build_static.py'), '--out', SITE, '--base', '/%s/' % REPO]

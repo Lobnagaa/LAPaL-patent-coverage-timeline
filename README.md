@@ -5,7 +5,7 @@ middle-income countries, when those patents are expected to expire, and where vo
 allow generic manufacturing and/or sale. Built by the Medicines Patent Pool as a prototype for the
 lapal.ch developers.
 
-**Site:** https://lobnagaa.github.io/lapal-patent-coverage/
+**Site:** https://lobnagaa.github.io/LAPaL-patent-coverage-timeline/
 - `prototype/` — interactive prototype: map per entry with date slider and patent timeline, landscape
   by product, landscape by country for HIV long-acting therapeutics.
 - `landscape/patents/` — static pages, one per entry and per country, readable without JavaScript:
