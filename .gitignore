@@ -1,0 +1,15 @@
+.DS_Store
+__pycache__/
+# Downloads from MedsPaL, lapal.ch and Google Patents (138 MB, rebuilt by tools/build_patents.py --refresh)
+cache/
+# SharePoint packages (zips of files already in the repository)
+share/
+# Local preview build of the static pages; the published copy is site/
+static/
+# MPP working inputs, kept out of the repository
+LAPAL_Patent info_MASTER-copy.xlsx
+URL_review_to_confirm.xlsx
+countries_MedsPaL_Sept2026.xlsx
+patents map timeline specs.pptx
+specs-images/
+samples/

@@ -1,0 +1,2 @@
+# Add to https://lapal.ch/robots.txt once the patent pages are public:
+Sitemap: https://lapal.ch/sitemap-patents.xml

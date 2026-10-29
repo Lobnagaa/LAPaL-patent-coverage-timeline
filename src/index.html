@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>LAPaL Patent Coverage</title>
+<style>/*__CSS__*/</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">LAPaL</span>
+    <span class="brand-sub">Patent coverage of LA therapeutics covered by LAPaL: working prototype</span>
+  </div>
+  <div class="internal">Internal MPP use only · data snapshot <span id="snapshot-date"></span></div>
+</header>
+
+<nav class="views" aria-label="Prototype views">
+  <div class="views-inner" role="tablist">
+    <button type="button" role="tab" data-view="entry">Entry page · Patent info tab</button>
+    <button type="button" role="tab" data-view="product">Landscape · by product</button>
+    <button type="button" role="tab" data-view="country">Landscape · by country (HIV)</button>
+  </div>
+</nav>
+
+<main class="page">
+  <!-- Entry page and Landscape-by-product share the map, panel and timeline below. -->
+  <div id="product-views">
+    <section class="picker" id="picker" aria-label="Choose an entry">
+      <label for="entry-search">LAPaL entry</label>
+      <div class="picker-row">
+        <input id="entry-search" type="search" placeholder="Search compounds, formulations, technologies…" autocomplete="off">
+        <select id="entry-select" aria-label="Entry"></select>
+      </div>
+      <p class="picker-note">On lapal.ch this view sits in each entry's <b>Patent info</b> tab; the picker stands in for navigating between entry pages.</p>
+    </section>
+
+    <section class="landscape-intro" id="landscape-intro" hidden>
+      <h1>Patent landscape</h1>
+      <p>Patent status by country for one LAPaL entry at a time, laid out like the <a href="https://lapal.ch/landscape/regulatory-status" target="_blank" rel="noopener">regulatory landscape</a>. Only entries for which this view is available are listed.</p>
+    </section>
+
+    <section class="entry-head" id="entry-head"></section>
+    <div class="disclaimer" id="disclaimer" role="note" hidden></div>
+    <div class="licence-note" id="licence-note" role="note" hidden></div>
+
+    <section class="layout" id="layout">
+      <aside class="filters" id="filters" hidden aria-label="Filters">
+        <div class="filter-group">
+          <div class="filter-label">Show</div>
+          <label class="check"><input type="checkbox" data-type="Technology" checked> LA Technologies</label>
+          <label class="check"><input type="checkbox" data-type="Compound" checked> LA Compounds</label>
+          <label class="check"><input type="checkbox" data-type="Formulation &amp; regimen" checked> LA Formulations &amp; regimens</label>
+        </div>
+        <div class="filter-group">
+          <label class="filter-label" for="f-ta">Therapeutic area</label>
+          <select id="f-ta"><option value="">All</option></select>
+        </div>
+        <div class="filter-group">
+          <label class="check"><input type="checkbox" id="f-prelim"> Include entries with preliminary data (LAPaL cards)</label>
+        </div>
+        <div class="filter-group">
+          <label class="filter-label" for="f-search">Compound / technology / formulation</label>
+          <input id="f-search" type="search" placeholder="Search…" autocomplete="off">
+          <div class="entry-list" id="f-entries" role="listbox" aria-label="Entries"></div>
+        </div>
+      </aside>
+
+      <div class="map-card">
+        <div class="card-tools">
+          <div class="maptable" role="tablist" aria-label="Map or table">
+            <button type="button" role="tab" data-mt="map" aria-selected="true">Map</button>
+            <button type="button" role="tab" data-mt="table" aria-selected="false">Table</button>
+          </div>
+          <div class="exports" aria-label="Export">
+            <button type="button" id="x-map-png">Save map as PNG</button>
+            <button type="button" id="x-map-csv">Download CSV</button>
+            <button type="button" id="x-print">Print</button>
+          </div>
+        </div>
+        <fieldset class="toggle" id="toggle">
+          <legend>Display countries</legend>
+          <label><input type="radio" name="scope" value="any" checked> With at least one patent granted/filed</label>
+          <label><input type="radio" name="scope" value="compound"> With at least one <b>compound</b> patent granted/filed</label>
+        </fieldset>
+        <div class="asof" id="asof" role="status"></div>
+        <!-- Plain-text summary of what the map shows; it follows the slider, scope and selected family.
+             The static pages (tools/build_static.py) open with the same sentences. -->
+        <p class="map-summary" id="map-summary" aria-live="polite"></p>
+        <div class="map-wrap" id="map-wrap">
+          <svg id="map" role="img" aria-label="World map of patent status by country" aria-describedby="map-summary"></svg>
+          <div class="zoom">
+            <button type="button" id="zoom-in" aria-label="Zoom in">+</button>
+            <button type="button" id="zoom-out" aria-label="Zoom out">−</button>
+            <button type="button" id="zoom-reset" aria-label="Reset zoom">⟲</button>
+          </div>
+          <div class="tooltip" id="tooltip" hidden></div>
+        </div>
+        <div class="country-table" id="country-table" hidden></div>
+        <div class="slider" id="slider" aria-label="Expected expiry dates"></div>
+        <div class="legend" id="legend"></div>
+        <div class="stats" id="stats"></div>
+        <div class="inforce" id="inforce" aria-live="polite"></div>
+      </div>
+      <aside class="panel" id="panel" aria-live="polite"></aside>
+    </section>
+
+    <section class="timeline-card" aria-labelledby="tl-title">
+      <div class="tl-head">
+        <h2 id="tl-title">Timeline of patent families</h2>
+        <span class="tl-scope" id="tl-scope"></span>
+        <div class="exports"><button type="button" id="x-tl-png">Save timeline as PNG</button><button type="button" id="x-tl-csv">Download CSV</button><button type="button" class="x-print">Print</button></div>
+      </div>
+      <p class="tl-note">Each bar runs from the filing date to the expected expiry date, grouped by filing year. Colour shows the strongest status <span id="tl-where">in any country</span> on the date selected above. Click a family to show it alone on the map and list its countries; click a bar end to see the map after that expiry date.</p>
+      <p class="map-summary" id="tl-summary"></p>
+      <div class="tl-body" id="timeline"></div>
+    </section>
+  </div>
+
+  <!-- Landscape by country: HIV long-acting entries with MedsPaL data, one row per product. -->
+  <div id="country-view" hidden>
+    <section class="landscape-intro">
+      <h1>Patents by country for HIV long-acting therapeutics</h1>
+      <p>Where patents are across the HIV long-acting entries on LAPaL that have MedsPaL patent data. Each product keeps its own row: products are compared side by side, never merged on one map.</p>
+    </section>
+    <section class="cv-layout">
+      <aside class="filters" aria-label="Country view filters">
+        <div class="filter-group">
+          <label class="filter-label" for="cv-country">Country</label>
+          <select id="cv-country"></select>
+        </div>
+        <div class="filter-group">
+          <div class="filter-label">Display</div>
+          <label class="check"><input type="radio" name="cv-scope" value="any" checked> Any patent</label>
+          <label class="check"><input type="radio" name="cv-scope" value="compound"> Compound patents only</label>
+        </div>
+        <div class="filter-group">
+          <label class="filter-label" for="cv-sort">Order rows by</label>
+          <select id="cv-sort">
+            <option value="status">Status (granted first)</option>
+            <option value="manual">Your own order (drag the rows)</option>
+            <option value="product">Product name (A–Z)</option>
+            <option value="type">Patent type in force (compound first)</option>
+            <option value="expiry-late">Expiry date (latest first)</option>
+            <option value="expiry-soon">Expiry date (soonest first)</option>
+          </select>
+          <p class="filter-note">Hover a row: drag the dotted grip to move it, click the crossed-out eye to hide it. Each patent line has its own eye at the end.</p>
+        </div>
+        <p class="filter-note">Data: MedsPaL, as linked to each LAPaL entry. Status today is as recorded in MedsPaL; later dates are projected from expected expiry dates.</p>
+      </aside>
+      <div class="cv-main">
+        <div class="cv-card">
+          <div class="asof" id="cv-asof" role="status"></div>
+          <div class="slider" id="cv-slider" aria-label="Date"></div>
+        </div>
+        <div class="cv-card">
+          <div class="tl-head"><h2 id="cv-title"></h2><span class="tl-scope" id="cv-scope"></span>
+            <div class="exports"><button type="button" id="x-cv-png">Save chart as PNG</button><button type="button" id="x-cv-csv">Download CSV</button><button type="button" class="x-print">Print</button></div></div>
+          <div class="edit-note" id="cv-edit-note" role="status" hidden></div>
+          <div class="hic-note" id="cv-hic-note" role="note" hidden></div>
+          <p class="tl-note">One row per product. Bars are the patents recorded in this country, from filing to expected expiry, coloured by status on the selected date.</p>
+          <p class="map-summary" id="cv-summary" aria-live="polite"></p>
+          <div class="tl-body" id="cv-products"></div>
+        </div>
+        <div class="cv-card">
+          <div class="tl-head"><h2>Overview across countries</h2><span class="tl-scope" id="cv-matrix-scope"></span>
+            <div class="exports"><button type="button" id="x-mx-csv">Download CSV</button><button type="button" class="x-print">Print</button></div></div>
+          <p class="tl-note">Each cell is one product in one country, coloured by its strongest status on the selected date. Click a country to open it above.</p>
+          <div class="matrix-wrap" id="cv-matrix"></div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!-- Printed only: where the data come from, with links (filled just before printing). -->
+  <section class="print-sources" id="print-sources" aria-hidden="true"></section>
+</main>
+
+<script>/*__D3__*/</script>
+<script>/*__TOPOJSON__*/</script>
+<script>/*__DATA__*/</script>
+<script>/*__APP__*/</script>
+</body>
+</html>

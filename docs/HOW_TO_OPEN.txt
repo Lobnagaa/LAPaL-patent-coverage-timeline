@@ -1,0 +1,63 @@
+LAPaL patent coverage — working prototype
+INTERNAL MPP USE ONLY. Please do not forward outside MPP or upload to a public site.
+
+WHAT IT IS
+A prototype of a new LAPaL feature: for each LAPaL entry, a world map of patent status
+(granted / filed / not in force) with a timeline of expected expiry dates. It also shows two
+"Landscape" views: one product at a time, and one country across the HIV long-acting products.
+
+HOW TO OPEN IT
+1. In SharePoint, select the file "LAPaL_patent_coverage_prototype_<date>.html" and choose
+   Download. (SharePoint does not run web pages inside the browser, so clicking it there will
+   only show the code or a download prompt.)
+2. Open the downloaded file in Chrome or Edge (double-click, or drag it into a browser window).
+3. Nothing is installed and nothing is sent anywhere: all data is inside the file. It works
+   offline; only the "Open on lapal.ch" and Espacenet links need the internet.
+
+WHAT TO TRY
+- Tabs at the top: "Entry page · Patent info tab", "Landscape · by product",
+  "Landscape · by country (HIV)".
+- A sentence above the map, the timeline and the by-country chart summarises what they show, and
+  changes as you move the date slider or select a family.
+- Click a country on the map to see its patents. Move the date slider under the map to see
+  which patents remain in force after each expected expiry date.
+- Under the map, "Patent families in force" lists which patents are still granted or filed on
+  the date chosen with the slider, and which have dropped out since today. Click a family to
+  show it alone on the map and list its countries (click again, or "Show all families", to go
+  back); click its expiry date to move the slider to just after that date.
+  The timeline of patent families at the bottom works the same way: click a family to select it
+  and list its countries; click the end of its bar to see the map after its expiry date.
+- On each patent card, "Same family in other countries" shows where else that patent family is
+  granted, filed or not in force; "Show only this family on the map" maps that family alone.
+- "With at least one compound patent" switches to compound patents only.
+- In "Landscape · by country (HIV)", "Order rows by" sorts the products by status, name, patent
+  type or expiry date. Hover a product: drag its dotted grip to move it, or click the crossed-out
+  eye to hide it. Each patent line has its own eye at the end (or use "Hide this patent family" in
+  its details) to hide that patent. A yellow "Edited view" note
+  then says what you changed, with buttons to show hidden rows again or reset the view; exports
+  say so too.
+- Every view can be saved as a PNG image or a CSV file (opens in Excel), or printed: the map,
+  the timeline of patent families, and the by-country chart (the country overview has CSV and
+  Print). CSV files include links: the lapal.ch page, Espacenet for each patent number, and the
+  family's Espacenet or Google Patents page. Printed pages end with the sources and these links.
+- The address bar keeps your selection: copy the full link to point a colleague to the same
+  view once they have the file open.
+
+PLEASE NOTE
+- Data snapshot date is shown at the top right. Sources: MedsPaL (patent data linked to LAPaL
+  entries) and the patent cards on lapal.ch.
+- Entries marked "Preliminary data" use the LAPaL patent cards: one expiry date applies to all
+  countries of a family. Their filing dates come from Google Patents; the few that could not be
+  found there are estimated (expiry minus 20 years) and marked as such.
+- Low- and middle-income countries only: high-income countries are greyed out and not covered.
+- Where MedsPaL has no national patent record for a country, the status is family-level: the
+  summary shown on the LAPaL patent map, without a national patent number or a country-specific
+  expiry date. Cards say so.
+- Cabotegravir, lenacapavir and alimatravir have voluntary licences that may allow generic
+  manufacturing and/or sale in some territories. Their entry pages say so, and selecting a country
+  shows whether it is in the licence territory. Check the licence terms for what is permitted where.
+- "Today" shows each patent's status exactly as recorded in MedsPaL, even if its expiry date
+  has passed. Later dates on the slider are projections from expected expiry dates only.
+- Flags are shown as emoji; on Windows they may appear as two-letter country codes.
+
+Questions or corrections: Lobna Gaayeb.

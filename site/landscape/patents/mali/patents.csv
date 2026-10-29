@@ -1,0 +1,33 @@
+﻿Country,Mali
+Data snapshot,2026-10-27
+Source,"MedsPaL, as linked to LAPaL entries"
+
+Product,LAPaL page,Product status in country,Patent family,Patent type,Family status in country,Expected expiry,Voluntary licence covers country
+Bictegravir (BIC),https://lapal.ch/compounds/bictegravir-bic,Granted,WO2015196116,Compound,Granted,2035-06-19,
+Cabotegravir & Lenacapavir,https://lapal.ch/formulations/cabotegravir-lenacapavir,Granted,WO2014134566,Compound,Granted,2034-02-28,
+Cabotegravir & Lenacapavir,https://lapal.ch/formulations/cabotegravir-lenacapavir,Granted,WO2018035359,Compound,Not in force,,
+Cabotegravir + Rilpivirine,https://lapal.ch/formulations/cabotegravir-rilpivirine,Granted,WO03016306,Compound,Not in force,,
+Cabotegravir + Rilpivirine,https://lapal.ch/formulations/cabotegravir-rilpivirine,Granted,WO2007082922,Dose/Regimen; Use,Granted,2027-01-19,
+Cabotegravir + Rilpivirine,https://lapal.ch/formulations/cabotegravir-rilpivirine,Granted,WO2007147882,Composition,Granted,2027-06-22,
+Lenacapavir (LEN),https://lapal.ch/compounds/lenacapavir-len,Granted,WO2014134566,Compound,Granted,2034-02-28,Lenacapavir
+Lenacapavir (LEN),https://lapal.ch/compounds/lenacapavir-len,Granted,WO2018035359,Compound,Not in force,,Lenacapavir
+Lenacapavir 6-Monthly,https://lapal.ch/formulations/lenacapavir-6-monthly,Granted,WO2014134566,Compound,Granted,2034-02-28,Lenacapavir
+Lenacapavir 6-Monthly,https://lapal.ch/formulations/lenacapavir-6-monthly,Granted,WO2018035359,Compound,Not in force,,Lenacapavir
+Rilpivirine 2-monthly,https://lapal.ch/formulations/rilpivirine-2-monthly,Granted,WO03016306,Compound,Not in force,,
+Rilpivirine 2-monthly,https://lapal.ch/formulations/rilpivirine-2-monthly,Granted,WO2006024668,Salt,Not in force,,
+Rilpivirine 2-monthly,https://lapal.ch/formulations/rilpivirine-2-monthly,Granted,WO2007082922,Dose/Regimen; Use,Granted,2027-01-19,
+Rilpivirine 2-monthly,https://lapal.ch/formulations/rilpivirine-2-monthly,Granted,WO2007147882,Composition,Granted,2027-06-22,
+Dapivirine (DPV),https://lapal.ch/compounds/dapivirine-dpv,Not in force,WO9950250,Compound,Not in force,,
+Dapivirine (DPV),https://lapal.ch/compounds/dapivirine-dpv,Not in force,WO03094920,Composition; Use,Not in force,,
+Drug Combination Nanoparticles (DcNP),https://lapal.ch/technology/drug-combination-nanoparticles-dcnp,Not in force,WO0208241,Compound; Salt,Not in force,,
+MK-8591D Islatravir + Lenacapavir,https://lapal.ch/formulations/mk-8591d-islatravir-and-lenacapavir,Not in force,WO2018035359,Compound,Not in force,,
+Tenofovir-Lamivudine-Dolutegravir (TLD) - long-acting injectable (LAI) (TLD LAI),https://lapal.ch/formulations/tenofovir-lamivudine-dolutegravir-tld-long-acting-injectable-lai-tld-lai,Not in force,WO0208241,Compound; Salt,Not in force,,
+Alimatravir MK-8527,https://lapal.ch/compounds/alimatravir-mk-8527,No patent recorded,,,,,Alimatravir
+Cabotegravir,https://lapal.ch/compounds/cabotegravir,No patent recorded,,,,,Cabotegravir
+Cabotegravir 4-Monthly (Q4M),https://lapal.ch/formulations/cabotegravir-4-monthly-q4m,No patent recorded,,,,,
+Extruded Polymer Device (EXPD),https://lapal.ch/technology/extruded-polymer-device-expd,No patent recorded,,,,,
+fremocapavir (VH-499),https://lapal.ch/compounds/vh-499-vh-4011499,No patent recorded,,,,,
+Islatravir (ISL),https://lapal.ch/compounds/islatravir-isl,No patent recorded,,,,,
+lepetegravir (GS-1720),https://lapal.ch/compounds/lepetegravir-gs-1720,No patent recorded,,,,,
+MK-8591B Islatravir + Ulonivirine,https://lapal.ch/formulations/mk-8591b-islatravir-ulonivirine,No patent recorded,,,,,
+ulonivirine (ULO),https://lapal.ch/compounds/ulonivirine-mk-8507,No patent recorded,,,,,

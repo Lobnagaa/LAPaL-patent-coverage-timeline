@@ -1,0 +1,24 @@
+﻿Country,Ethiopia
+Data snapshot,2026-10-27
+Source,"MedsPaL, as linked to LAPaL entries"
+
+Product,LAPaL page,Product status in country,Patent family,Patent type,Family status in country,Expected expiry,Voluntary licence covers country
+Bictegravir (BIC),https://lapal.ch/compounds/bictegravir-bic,Granted,WO2014100323,Compound,Granted,2033-12-19,
+Tenofovir-Lamivudine-Dolutegravir (TLD) - long-acting injectable (LAI) (TLD LAI),https://lapal.ch/formulations/tenofovir-lamivudine-dolutegravir-tld-long-acting-injectable-lai-tld-lai,Granted,WO0208241,Compound; Salt,Granted,2025-12-11,
+Drug Combination Nanoparticles (DcNP),https://lapal.ch/technology/drug-combination-nanoparticles-dcnp,Not in force,WO0208241,Compound; Salt,Not in force,,
+Alimatravir MK-8527,https://lapal.ch/compounds/alimatravir-mk-8527,No patent recorded,,,,,Alimatravir
+Cabotegravir,https://lapal.ch/compounds/cabotegravir,No patent recorded,,,,,Cabotegravir
+Cabotegravir & Lenacapavir,https://lapal.ch/formulations/cabotegravir-lenacapavir,No patent recorded,,,,,
+Cabotegravir + Rilpivirine,https://lapal.ch/formulations/cabotegravir-rilpivirine,No patent recorded,,,,,
+Cabotegravir 4-Monthly (Q4M),https://lapal.ch/formulations/cabotegravir-4-monthly-q4m,No patent recorded,,,,,
+Dapivirine (DPV),https://lapal.ch/compounds/dapivirine-dpv,No patent recorded,,,,,
+Extruded Polymer Device (EXPD),https://lapal.ch/technology/extruded-polymer-device-expd,No patent recorded,,,,,
+fremocapavir (VH-499),https://lapal.ch/compounds/vh-499-vh-4011499,No patent recorded,,,,,
+Islatravir (ISL),https://lapal.ch/compounds/islatravir-isl,No patent recorded,,,,,
+Lenacapavir (LEN),https://lapal.ch/compounds/lenacapavir-len,No patent recorded,,,,,Lenacapavir
+Lenacapavir 6-Monthly,https://lapal.ch/formulations/lenacapavir-6-monthly,No patent recorded,,,,,Lenacapavir
+lepetegravir (GS-1720),https://lapal.ch/compounds/lepetegravir-gs-1720,No patent recorded,,,,,
+MK-8591B Islatravir + Ulonivirine,https://lapal.ch/formulations/mk-8591b-islatravir-ulonivirine,No patent recorded,,,,,
+MK-8591D Islatravir + Lenacapavir,https://lapal.ch/formulations/mk-8591d-islatravir-and-lenacapavir,No patent recorded,,,,,
+Rilpivirine 2-monthly,https://lapal.ch/formulations/rilpivirine-2-monthly,No patent recorded,,,,,
+ulonivirine (ULO),https://lapal.ch/compounds/ulonivirine-mk-8507,No patent recorded,,,,,

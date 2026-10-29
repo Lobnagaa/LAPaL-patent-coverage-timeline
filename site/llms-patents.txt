@@ -1,0 +1,242 @@
+# LAPaL — patent landscape of long-acting therapeutics
+
+> Patent status of 124 long-acting medicines, formulations and technologies in low- and middle-income countries: granted, filed (pending) and no-longer-in-force patents, expected expiry dates and voluntary licences, by product and by country. Published by the Medicines Patent Pool (MPP). Data snapshot: 2026-10-27.
+
+Patent status comes from MedsPaL (https://www.medspal.org) as linked to each LAPaL entry, or, where marked preliminary, from the patent cards on the LAPaL entry page. Status is "as recorded"; future dates are projections from expected expiry dates. Voluntary licences "may allow" generic manufacturing and/or sale in some territories; the licence terms decide. Patent information is for information only, not legal advice. Please quote the snapshot date with any figure.
+
+## Overview
+
+- [Patent landscape (all entries)](https://lapal.ch/landscape/patents/): index of entry and country pages
+- [All entries, CSV](https://lapal.ch/landscape/patents/patents.csv)
+
+## Entries
+
+- [10E8.4/iMab patents](https://lapal.ch/compounds/10e84imab/patents/): granted in 0, filed in 0 LMICs (preliminary)
+- [3D printed intravaginal rings patents](https://lapal.ch/technology/3d-printed-intravaginal-rings/patents/): granted in 8, filed in 0 LMICs; latest expected expiry 2037-03-23
+- [Acoziborole patents](https://lapal.ch/compounds/acoziborole/patents/): granted in 17, filed in 0 LMICs; latest expected expiry 2030-08-06 (preliminary)
+- [AKG-100 patents](https://lapal.ch/compounds/akg-100/patents/): granted in 28, filed in 25 LMICs; latest expected expiry 2042-12-22 (preliminary)
+- [albuvirtide (ABT) patents](https://lapal.ch/compounds/albuvirtide/patents/): granted in 1, filed in 1 LMICs; latest expected expiry 2039-05-07 (preliminary)
+- [Alimatravir MK-8527 patents](https://lapal.ch/compounds/alimatravir-mk-8527/patents/): granted in 42, filed in 8 LMICs; latest expected expiry 2035-05-18
+- [Aripiprazole patents](https://lapal.ch/formulations/aripiprazole/patents/): patent families listed; no LMIC country status recorded (preliminary)
+- [Atazanavir + Ritonavir + Tenofovir Nanoparticle suspension patents](https://lapal.ch/formulations/atazanavir-ritonavir-tenofovir-nanoparticle-suspension/patents/): patent families listed; no LMIC country status recorded (preliminary)
+- [Atovaquone patents](https://lapal.ch/compounds/atovaquone/patents/): patent families listed; no LMIC country status recorded (preliminary)
+- [Bedaquiline patents](https://lapal.ch/compounds/bedaquiline/patents/): granted in 42, filed in 4 LMICs; latest expected expiry 2041-11-16
+- [Bedaquiline Long-Acting patents](https://lapal.ch/formulations/bedaquiline-long-acting/patents/): granted in 42, filed in 4 LMICs; latest expected expiry 2041-11-16
+- [BEPO® patents](https://lapal.ch/technology/bepo/patents/): granted in 16, filed in 4 LMICs; latest expected expiry 2036-11-16
+- [Bictegravir (BIC) patents](https://lapal.ch/compounds/bictegravir-bic/patents/): granted in 74, filed in 6 LMICs; latest expected expiry 2035-06-19
+- [Bictegravir-PLGA nanoformulation patents](https://lapal.ch/formulations/bictegravir-plga-nanoformulation/patents/): patent families listed; no LMIC country status recorded (preliminary)
+- [Budigalimab patents](https://lapal.ch/compounds/budigalimab/patents/): granted in 9, filed in 2 LMICs; latest expected expiry 2037-09-14 (preliminary)
+- [Buprenorphine patents](https://lapal.ch/formulations/buprenorphine/patents/): granted in 17, filed in 2 LMICs; latest expected expiry 2033-07-26 (preliminary)
+- [CAB-LA (Cabotegravir 2-Monthly) patents](https://lapal.ch/formulations/cab-la-cabotegravir-2-monthly/patents/): granted in 20, filed in 0 LMICs; latest expected expiry 2038-01-25
+- [Cabotegravir patents](https://lapal.ch/compounds/cabotegravir/patents/): granted in 20, filed in 0 LMICs; latest expected expiry 2038-01-25
+- [Cabotegravir & Lenacapavir patents](https://lapal.ch/formulations/cabotegravir-lenacapavir/patents/): granted in 64, filed in 7 LMICs; latest expected expiry 2040-11-25
+- [Cabotegravir + Rilpivirine patents](https://lapal.ch/formulations/cabotegravir-rilpivirine/patents/): granted in 42, filed in 2 LMICs; latest expected expiry 2038-07-18
+- [Cabotegravir 4-Monthly (Q4M) patents](https://lapal.ch/formulations/cabotegravir-4-monthly-q4m/patents/): granted in 9, filed in 2 LMICs; latest expected expiry 2046-03-25
+- [cabotegravir PH20 patents](https://lapal.ch/formulations/cabotegravir-ph20/patents/): patent families listed; no LMIC country status recorded (preliminary)
+- [CD388 patents](https://lapal.ch/formulations/cd388-mab/patents/): granted in 3, filed in 28 LMICs; latest expected expiry 2040-09-08 (preliminary)
+- [CIS43LS (mAb) patents](https://lapal.ch/compounds/cis43ls/patents/): granted in 0, filed in 0 LMICs (preliminary)
+- [Clesrovimab patents](https://lapal.ch/compounds/clesrovimab/patents/): granted in 30, filed in 17 LMICs; latest expected expiry 2039-10-14
+- [Cloudbreak (r) patents](https://lapal.ch/technology/cloudbreak-r/patents/): granted in 3, filed in 28 LMICs; latest expected expiry 2040-09-08 (preliminary)
+- [Clulevibart (RB0026) patents](https://lapal.ch/compounds/rb0026/patents/): granted in 1, filed in 5 LMICs; latest expected expiry 2036-11-29 (preliminary)
+- [Dapivirine (DPV) patents](https://lapal.ch/compounds/dapivirine-dpv/patents/): granted in 0, filed in 0 LMICs
+- [Dapivirine Monthly Vaginal Ring patents](https://lapal.ch/technology/dapivirine-monthly-vaginal-ring/patents/): granted in 0, filed in 0 LMICs
+- [Delamanid Lipid-Based Nanoparticle Formulation patents](https://lapal.ch/formulations/delamanid-lipid-based-nanoparticle-formulation/patents/): patent families listed; no LMIC country status recorded (preliminary)
+- [DelSiTech Silica Matrix Drug Delivery patents](https://lapal.ch/technology/delsitech-silica-matrix-drug-delivery/patents/): granted in 8, filed in 0 LMICs; latest expected expiry 2036-10-21
+- [DepoFoam (Proprietary multivesicular liposome (pMVL) technology) patents](https://lapal.ch/technology/depofoam-proprietary-multivesicular-liposome-pmvl-technology/patents/): patent families listed; no LMIC country status recorded (preliminary)
+- [Depulfavirine nanosphere LAI patents](https://lapal.ch/formulations/depulfavirine-nanosphere-lai/patents/): granted in 8, filed in 2 LMICs; latest expected expiry 2038-02-14 (preliminary)
+- [Diffusphere Intraarticular Injectable Technology patents](https://lapal.ch/technology/diffusphere-intraarticular-injectable-technology/patents/): patent families listed; no LMIC country status recorded (preliminary)
+- [Drug Combination Nanoparticles (DcNP) patents](https://lapal.ch/technology/drug-combination-nanoparticles-dcnp/patents/): granted in 44, filed in 0 LMICs; latest expected expiry 2041-01-07
+- [DSM265 patents](https://lapal.ch/compounds/dsm265/patents/): granted in 8, filed in 0 LMICs; latest expected expiry 2031-09-14 (preliminary)
+- [Efruxifermin (mAb) patents](https://lapal.ch/compounds/efruxifermin/patents/): granted in 19, filed in 32 LMICs; latest expected expiry 2042-10-12 (preliminary)
+- [ELQ-331 patents](https://lapal.ch/compounds/elq-331/patents/): patent families listed; no LMIC country status recorded (preliminary)
+- [Enhanced Antibody Drug Conjugates (ADC) patents](https://lapal.ch/technology/enhanced-antibody-drug-conjugates-adc/patents/): patent families listed; no LMIC country status recorded (preliminary)
+- [Ethylene Vinyl Acetate Implant (VitalDose®) patents](https://lapal.ch/technology/ethylene-vinyl-acetate-implant-vitaldose/patents/): granted in 3, filed in 6 LMICs; latest expected expiry 2040-03-23 (preliminary)
+- [Extruded Polymer Device (EXPD) patents](https://lapal.ch/technology/extruded-polymer-device-expd/patents/): granted in 1, filed in 5 LMICs; latest expected expiry 2039-10-16
+- [Fatty acid bundles patents](https://lapal.ch/technology/fatty-acid-bundles/patents/): granted in 1, filed in 4 LMICs; latest expected expiry 2038-09-19
+- [FluidCrystal® patents](https://lapal.ch/technology/fluidcrystal/patents/): granted in 18, filed in 2 LMICs; latest expected expiry 2035-06-06 (preliminary)
+- [Fluphenazine patents](https://lapal.ch/compounds/fluphenazine/patents/): patent families listed; no LMIC country status recorded (preliminary)
+- [fremocapavir (VH-499) patents](https://lapal.ch/compounds/vh-499-vh-4011499/patents/): granted in 28, filed in 9 LMICs; latest expected expiry 2042-10-12
+- [Fusogenic Liposome-coated Porous Silicon Nanoparticles patents](https://lapal.ch/technology/fusogenic-liposome-coated-porous-silicon-nanoparticles/patents/): patent families listed; no LMIC country status recorded (preliminary)
+- [Gemcitabine Intravesical LAI patents](https://lapal.ch/formulations/gemcitabine-intravesical-lai/patents/): granted in 11, filed in 0 LMICs; latest expected expiry 2034-08-19 (preliminary)
+- [Glecaprevir (G) patents](https://lapal.ch/compounds/glecaprevir-and-pibrentasvir-gp/patents/): granted in 34, filed in 3 LMICs; latest expected expiry 2036-10-12
+- [Glecaprevir Pibrentasvir LA injection patents](https://lapal.ch/formulations/glecaprevir-pibrentasvir-la-injection/patents/): granted in 34, filed in 3 LMICs; latest expected expiry 2036-10-12
+- [Hydrogel Microspheres with β-eliminative Linker Technology patents](https://lapal.ch/technology/hydrogel-microspheres-with-v-eliminative-linker-technology/patents/): patent families listed; no LMIC country status recorded (preliminary)
+- [Ibalizumab patents](https://lapal.ch/compounds/ibalizumab/patents/): patent families listed; no LMIC country status recorded (preliminary)
+- [In-situ Microimplants patents](https://lapal.ch/technology/in-situ-microimplants/patents/): patent families listed; no LMIC country status recorded (preliminary)
+- [Insulin Efsitora patents](https://lapal.ch/formulations/insulin-efsitora/patents/): granted in 34, filed in 27 LMICs; latest expected expiry 2042-11-14 (preliminary)
+- [Insulin Icodec patents](https://lapal.ch/formulations/insulin-icodec/patents/): granted in 16, filed in 2 LMICs; latest expected expiry 2037-12-15
+- [INTASYL self-delivery technology patents](https://lapal.ch/technology/intasyl-self-delivery-technology/patents/): patent families listed; no LMIC country status recorded (preliminary)
+- [Islatravir (ISL) patents](https://lapal.ch/compounds/islatravir-isl/patents/): granted in 25, filed in 8 LMICs; latest expected expiry 2037-02-10
+- [Ivermectin patents](https://lapal.ch/compounds/ivermectin/patents/): patent families listed; no LMIC country status recorded (preliminary)
+- [L9LS (mAb) patents](https://lapal.ch/compounds/l9ls/patents/): granted in 0, filed in 5 LMICs; latest expected expiry 2040-05-04 (preliminary)
+- [LAPSCOVERY (Long Acting Protein / Peptide Discovery Platform Technology) patents](https://lapal.ch/technology/lapscovery-long-acting-protein-peptide-discovery-platform-technology/patents/): granted in 1, filed in 2 LMICs; latest expected expiry 2032-06-01 (preliminary)
+- [Lenacapavir (LEN) patents](https://lapal.ch/compounds/lenacapavir-len/patents/): granted in 63, filed in 7 LMICs; latest expected expiry 2039-07-15
+- [lenacapavir + teropavimab + zinlirvimab patents](https://lapal.ch/formulations/lenacapavir-teropavimab-zinlirvimab/patents/): granted in 0, filed in 7 LMICs; latest expected expiry 2043-08-11 (preliminary)
+- [Lenacapavir 6-Monthly patents](https://lapal.ch/formulations/lenacapavir-6-monthly/patents/): granted in 63, filed in 7 LMICs; latest expected expiry 2044-04-18
+- [Lenacapavir Once-Yearly patents](https://lapal.ch/formulations/lenacapavir-once-yearly/patents/): granted in 63, filed in 7 LMICs; latest expected expiry 2044-04-18
+- [Lenacapavir pacfosacil (GS-4182) patents](https://lapal.ch/compounds/lenacapavir-pacfosacil-gs-4182/patents/): granted in 0, filed in 48 LMICs; latest expected expiry 2044-05-30 (preliminary)
+- [lepetegravir (GS-1720) patents](https://lapal.ch/compounds/lepetegravir-gs-1720/patents/): granted in 9, filed in 39 LMICs; latest expected expiry 2042-01-18
+- [Long-acting hyFc Fusion Technology patents](https://lapal.ch/technology/long-acting-hyfc-fusion-technology/patents/): granted in 2, filed in 7 LMICs; latest expected expiry 2036-11-02 (preliminary)
+- [Long-Acting Injectable Solid Drug Nanoparticle (SDN) Platform patents](https://lapal.ch/technology/long-acting-injectable-solid-drug-nanoparticle-sdn-platform/patents/): granted in 54, filed in 0 LMICs; latest expected expiry 2037-06-15
+- [Lopinavir, Ritonavir, and Tenofovir (LRT) TLC-ART 101 patents](https://lapal.ch/formulations/lopinavir-ritonavir-and-tenofovir-lrt-tlc-art-101/patents/): granted in 0, filed in 2 LMICs; latest expected expiry 2040-01-10 (preliminary)
+- [Lotivibart (N6LS) (VH3810109) (mAb) patents](https://lapal.ch/compounds/n6ls-vh3810109/patents/): granted in 3, filed in 9 LMICs; latest expected expiry 2042-12-16 (preliminary)
+- [LY03010 (Paliperidone Palmitate PP1M) patents](https://lapal.ch/formulations/ly03010-paliperidone-palmitate-once-monthly-pp1m/patents/): granted in 2, filed in 0 LMICs; latest expected expiry 2038-10-26 (preliminary)
+- [LYNX patents](https://lapal.ch/technology/lynx/patents/): granted in 4, filed in 5 LMICs; latest expected expiry 2038-06-08 (preliminary)
+- [Mesoporous silica nanoparticles (MSNP) patents](https://lapal.ch/technology/mesoporous-silica-nanoparticles-msnp/patents/): patent families listed; no LMIC country status recorded (preliminary)
+- [MK-8591B Islatravir + Ulonivirine patents](https://lapal.ch/formulations/mk-8591b-islatravir-ulonivirine/patents/): granted in 40, filed in 17 LMICs; latest expected expiry 2037-02-10
+- [MK-8591D Islatravir + Lenacapavir patents](https://lapal.ch/formulations/mk-8591d-islatravir-and-lenacapavir/patents/): granted in 48, filed in 8 LMICs; latest expected expiry 2040-11-25
+- [Multi-Arm Polymer Conjugated Immmunotherapies patents](https://lapal.ch/technology/multi-arm-polymer-conjugated-immmunotherapies/patents/): patent families listed; no LMIC country status recorded (preliminary)
+- [MZCL Intravaginal Ring patents](https://lapal.ch/technology/mzcl-intravaginal-ring/patents/): granted in 0, filed in 0 LMICs (preliminary)
+- [naltrexone patents](https://lapal.ch/compounds/naltrexone/patents/): granted in 0, filed in 0 LMICs
+- [Nanocrystalline Prodrug Technology patents](https://lapal.ch/technology/nanocrystalline-prodrug-technology/patents/): granted in 9, filed in 5 LMICs; latest expected expiry 2039-10-22 (preliminary)
+- [NanoPortal™ patents](https://lapal.ch/technology/nanoportal/patents/): granted in 1, filed in 5 LMICs; latest expected expiry 2032-12-05 (preliminary)
+- [Niclosamide patents](https://lapal.ch/compounds/niclosamide/patents/): patent families listed; no LMIC country status recorded (preliminary)
+- [Nirsevimab Beyfortus patents](https://lapal.ch/compounds/nirsevimab/patents/): granted in 20, filed in 7 LMICs; latest expected expiry 2040-04-30
+- [Olanzapine Pamoate patents](https://lapal.ch/formulations/olanzapine-pamoate/patents/): patent families listed; no LMIC country status recorded (preliminary)
+- [ORKA-001 (mAb) patents](https://lapal.ch/formulations/orka-001-mab/patents/): granted in 0, filed in 14 LMICs; latest expected expiry 2045-02-05 (preliminary)
+- [Paliperidone patents](https://lapal.ch/compounds/paliperidone/patents/): granted in 16, filed in 4 LMICs; latest expected expiry 2028-12-17
+- [Paliperidone Palmitate Once-Monthly (PP1M) patents](https://lapal.ch/formulations/paliperidone-palmitate-once-monthly-pp1m/patents/): granted in 16, filed in 4 LMICs; latest expected expiry 2028-12-17
+- [Paliperidone Palmitate Six-Monthly (PP6M) patents](https://lapal.ch/formulations/paliperidone-palmitate-six-monthly-pp6m/patents/): granted in 12, filed in 0 LMICs; latest expected expiry 2041-11-24 (preliminary)
+- [Paliperidone Palmitate Three Monthly (PP3M) patents](https://lapal.ch/formulations/paliperidone-palmitate-three-monthly-pp3m/patents/): granted in 15, filed in 0 LMICs; latest expected expiry 2026-03-30 (preliminary)
+- [Pembrolizumab Keytruda patents](https://lapal.ch/formulations/pembrolizumab/patents/): granted in 16, filed in 7 LMICs; latest expected expiry 2035-02-03
+- [Peptide-like hydrogels as a long-acting injectable drug delivery platform patents](https://lapal.ch/technology/peptide-like-hydrogels-as-a-long-acting-injectable-drug-delivery-platform/patents/): granted in 0, filed in 6 LMICs; latest expected expiry 2044-03-27 (preliminary)
+- [PGDM1400 (mAb) patents](https://lapal.ch/compounds/pgdm1400/patents/): patent families listed; no LMIC country status recorded (preliminary)
+- [PGT-121 (mAb) patents](https://lapal.ch/compounds/pgt-121/patents/): patent families listed; no LMIC country status recorded (preliminary)
+- [Plexis Long-acting Injectable patents](https://lapal.ch/technology/plexis-long-acting-injectable/patents/): granted in 6, filed in 0 LMICs; latest expected expiry 2034-03-21 (preliminary)
+- [POZ™ polymer LAI patents](https://lapal.ch/technology/poz-polymer-lai/patents/): patent families listed; no LMIC country status recorded (preliminary)
+- [Refillable Nanofluidic Implant patents](https://lapal.ch/technology/refillable-nanofluidic-implant/patents/): granted in 0, filed in 5 LMICs; latest expected expiry 2041-01-15 (preliminary)
+- [retatrutide patents](https://lapal.ch/compounds/retatrutide/patents/): granted in 29, filed in 15 LMICs; latest expected expiry 2038-12-14
+- [Retavibart TNM-001 patents](https://lapal.ch/compounds/tnm-001/patents/): granted in 2, filed in 5 LMICs; latest expected expiry 2044-11-08
+- [rifabutin patents](https://lapal.ch/compounds/rifabutin/patents/): patent families listed; no LMIC country status recorded (preliminary)
+- [Rifapentine LAI patents](https://lapal.ch/formulations/rifapentine-lai/patents/): granted in 0, filed in 7 LMICs; latest expected expiry 2044-03-22 (preliminary)
+- [Rilpivirine 2-monthly patents](https://lapal.ch/formulations/rilpivirine-2-monthly/patents/): granted in 43, filed in 3 LMICs; latest expected expiry 2030-09-02
+- [Rilpivirine Prodrug Nanoformulation (NM3RPV) patents](https://lapal.ch/formulations/rilpivirine-prodrug-nanoformulation-nm3rpv/patents/): granted in 0, filed in 0 LMICs (preliminary)
+- [Risperidone patents](https://lapal.ch/compounds/risperidone/patents/): patent families listed; no LMIC country status recorded (preliminary)
+- [SAFA (anti-Serum Albumin Fab Associated) platform technology patents](https://lapal.ch/technology/safa-anti-serum-albumin-fab-associated-platform-technology/patents/): granted in 14, filed in 21 LMICs; latest expected expiry 2043-10-19 (preliminary)
+- [Scalable process to achieve LA injectable delivery of insoluble medicines patents](https://lapal.ch/technology/scalable-process-to-achieve-la-injectable-delivery-of-insoluble-medicines/patents/): patent families listed; no LMIC country status recorded (preliminary)
+- [Semaglutide patents](https://lapal.ch/formulations/semaglutide-sema/patents/): granted in 19, filed in 6 LMICs; latest expected expiry 2043-07-13
+- [Sorfequiline (TBAJ-876) tartrate patents](https://lapal.ch/formulations/sorfequiline-tbaj-876-tartrate/patents/): granted in 11, filed in 0 LMICs; latest expected expiry 2037-03-07 (preliminary)
+- [STARSILON Transdermal Patch patents](https://lapal.ch/technology/starsilon-transdermal-patch/patents/): patent families listed; no LMIC country status recorded (preliminary)
+- [survodutide patents](https://lapal.ch/compounds/survodutide/patents/): granted in 28, filed in 3 LMICs; latest expected expiry 2042-07-28
+- [TBAJ-587 fumarate patents](https://lapal.ch/compounds/tbaj-587-fumarate/patents/): granted in 11, filed in 0 LMICs; latest expected expiry 2037-03-07 (preliminary)
+- [Tenofovir alafenamide (TAF) patents](https://lapal.ch/compounds/tenofovir-alafenamide-taf/patents/): granted in 39, filed in 4 LMICs; latest expected expiry 2034-05-20
+- [Tenofovir-Lamivudine-Dolutegravir (TLD) - long-acting injectable (LAI) (TLD LAI) patents](https://lapal.ch/formulations/tenofovir-lamivudine-dolutegravir-tld-long-acting-injectable-lai-tld-lai/patents/): granted in 41, filed in 4 LMICs; latest expected expiry 2034-05-20
+- [Teropavimab + Zinlirvimab patents](https://lapal.ch/formulations/teropavimab-zinlirvimab/patents/): granted in 13, filed in 1 LMICs; latest expected expiry 2039-09-12 (preliminary)
+- [Thin Film Polycaprolactone Device Implant patents](https://lapal.ch/technology/thin-film-polycaprolactone-device-implant/patents/): patent families listed; no LMIC country status recorded (preliminary)
+- [Tirzepatide TIRZE patents](https://lapal.ch/formulations/tirzepatide-tirze/patents/): granted in 41, filed in 7 LMICs; latest expected expiry 2039-06-14
+- [TransCon Technology patents](https://lapal.ch/technology/transcon-technology/patents/): patent families listed; no LMIC country status recorded (preliminary)
+- [Tunable Biodegradable Ultra-Long-Acting Polymeric Solid Implant (PSI) patents](https://lapal.ch/technology/tunable-biodegradable-ultra-long-acting-polymeric-solid-implant-psi/patents/): granted in 24, filed in 0 LMICs; latest expected expiry 2026-04-28
+- [ulonivirine (ULO) patents](https://lapal.ch/compounds/ulonivirine-mk-8507/patents/): granted in 39, filed in 13 LMICs; latest expected expiry 2033-10-08
+- [Ultra Long-Acting Tenofovir ProTide patents](https://lapal.ch/formulations/ultra-long-acting-tenofovir-protide/patents/): granted in 0, filed in 0 LMICs (preliminary)
+- [Ultra-Long-Acting Dimeric Bictegravir Prodrug patents](https://lapal.ch/formulations/ultra-long-acting-dimeric-bictegravir-prodrug/patents/): granted in 1, filed in 5 LMICs; latest expected expiry 2039-11-27 (preliminary)
+- [Ultra-Long-Acting Multi-Purpose In-situ Forming Implant (ISFI) patents](https://lapal.ch/technology/ultra-long-acting-multi-purpose-in-situ-forming-implant-isfi/patents/): granted in 0, filed in 4 LMICs; latest expected expiry 2042-06-30
+- [Vaginal Film (MATRIX) patents](https://lapal.ch/technology/vaginal-film-matrix/patents/): patent families listed; no LMIC country status recorded (preliminary)
+- [VH-184 (VH-4524184) Long-Acting HIV Treatment Compound patents](https://lapal.ch/compounds/vh-184-vh-4524184/patents/): granted in 19, filed in 12 LMICs; latest expected expiry 2039-05-30 (preliminary)
+- [VH-310 (VH-4367310; cabotegravir stearate; XVIR-110) patents](https://lapal.ch/compounds/vh-310-vh-4367310/patents/): granted in 9, filed in 5 LMICs; latest expected expiry 2039-10-22 (preliminary)
+- [VRC01 (mAb) patents](https://lapal.ch/compounds/vrc01/patents/): granted in 2, filed in 0 LMICs; latest expected expiry 2030-09-24 (preliminary)
+- [VRC07-523LS (mAb) (TMB-380) patents](https://lapal.ch/compounds/vrc07-523ls/patents/): granted in 0, filed in 7 LMICs; latest expected expiry 2039-02-21 (preliminary)
+
+## Countries (HIV long-acting therapeutics)
+
+- [Albania](https://lapal.ch/landscape/patents/albania/)
+- [Algeria](https://lapal.ch/landscape/patents/algeria/)
+- [Argentina](https://lapal.ch/landscape/patents/argentina/)
+- [Armenia](https://lapal.ch/landscape/patents/armenia/)
+- [Azerbaijan](https://lapal.ch/landscape/patents/azerbaijan/)
+- [Bangladesh](https://lapal.ch/landscape/patents/bangladesh/)
+- [Belarus](https://lapal.ch/landscape/patents/belarus/)
+- [Belize](https://lapal.ch/landscape/patents/belize/)
+- [Benin](https://lapal.ch/landscape/patents/benin/)
+- [Bolivia](https://lapal.ch/landscape/patents/bolivia/)
+- [Bosnia and Herzegovina](https://lapal.ch/landscape/patents/bosnia-and-herzegovina/)
+- [Botswana](https://lapal.ch/landscape/patents/botswana/)
+- [Brazil](https://lapal.ch/landscape/patents/brazil/)
+- [Burkina Faso](https://lapal.ch/landscape/patents/burkina-faso/)
+- [Cambodia](https://lapal.ch/landscape/patents/cambodia/)
+- [Cameroon](https://lapal.ch/landscape/patents/cameroon/)
+- [Central African Republic](https://lapal.ch/landscape/patents/central-african-republic/)
+- [Chad](https://lapal.ch/landscape/patents/chad/)
+- [China](https://lapal.ch/landscape/patents/china/)
+- [Colombia](https://lapal.ch/landscape/patents/colombia/)
+- [Comoros](https://lapal.ch/landscape/patents/comoros/)
+- [Congo, Dem. Rep.](https://lapal.ch/landscape/patents/congo-dem-rep/)
+- [Congo, Rep.](https://lapal.ch/landscape/patents/congo-rep/)
+- [Cote d'Ivoire](https://lapal.ch/landscape/patents/cote-divoire/)
+- [Cuba](https://lapal.ch/landscape/patents/cuba/)
+- [Dominican Republic](https://lapal.ch/landscape/patents/dominican-republic/)
+- [Ecuador](https://lapal.ch/landscape/patents/ecuador/)
+- [Egypt, Arab Rep.](https://lapal.ch/landscape/patents/egypt-arab-rep/)
+- [El Salvador](https://lapal.ch/landscape/patents/el-salvador/)
+- [Equatorial Guinea](https://lapal.ch/landscape/patents/equatorial-guinea/)
+- [Eswatini](https://lapal.ch/landscape/patents/eswatini/)
+- [Ethiopia](https://lapal.ch/landscape/patents/ethiopia/)
+- [Fiji](https://lapal.ch/landscape/patents/fiji/)
+- [Gabon](https://lapal.ch/landscape/patents/gabon/)
+- [Gambia, The](https://lapal.ch/landscape/patents/gambia-the/)
+- [Georgia](https://lapal.ch/landscape/patents/georgia/)
+- [Ghana](https://lapal.ch/landscape/patents/ghana/)
+- [Grenada](https://lapal.ch/landscape/patents/grenada/)
+- [Guatemala](https://lapal.ch/landscape/patents/guatemala/)
+- [Guinea](https://lapal.ch/landscape/patents/guinea/)
+- [Guinea-Bissau](https://lapal.ch/landscape/patents/guinea-bissau/)
+- [Haiti](https://lapal.ch/landscape/patents/haiti/)
+- [Honduras](https://lapal.ch/landscape/patents/honduras/)
+- [India](https://lapal.ch/landscape/patents/india/)
+- [Indonesia](https://lapal.ch/landscape/patents/indonesia/)
+- [Iran, Islamic Rep.](https://lapal.ch/landscape/patents/iran-islamic-rep/)
+- [Jamaica](https://lapal.ch/landscape/patents/jamaica/)
+- [Jordan](https://lapal.ch/landscape/patents/jordan/)
+- [Kazakhstan](https://lapal.ch/landscape/patents/kazakhstan/)
+- [Kenya](https://lapal.ch/landscape/patents/kenya/)
+- [Kiribati](https://lapal.ch/landscape/patents/kiribati/)
+- [Kosovo](https://lapal.ch/landscape/patents/kosovo/)
+- [Kyrgyz Republic](https://lapal.ch/landscape/patents/kyrgyz-republic/)
+- [Lebanon](https://lapal.ch/landscape/patents/lebanon/)
+- [Lesotho](https://lapal.ch/landscape/patents/lesotho/)
+- [Liberia](https://lapal.ch/landscape/patents/liberia/)
+- [Libya](https://lapal.ch/landscape/patents/libya/)
+- [Malawi](https://lapal.ch/landscape/patents/malawi/)
+- [Malaysia](https://lapal.ch/landscape/patents/malaysia/)
+- [Mali](https://lapal.ch/landscape/patents/mali/)
+- [Mauritania](https://lapal.ch/landscape/patents/mauritania/)
+- [Mexico](https://lapal.ch/landscape/patents/mexico/)
+- [Moldova](https://lapal.ch/landscape/patents/moldova/)
+- [Mongolia](https://lapal.ch/landscape/patents/mongolia/)
+- [Montenegro](https://lapal.ch/landscape/patents/montenegro/)
+- [Morocco](https://lapal.ch/landscape/patents/morocco/)
+- [Mozambique](https://lapal.ch/landscape/patents/mozambique/)
+- [Namibia](https://lapal.ch/landscape/patents/namibia/)
+- [Nepal](https://lapal.ch/landscape/patents/nepal/)
+- [Nicaragua](https://lapal.ch/landscape/patents/nicaragua/)
+- [Niger](https://lapal.ch/landscape/patents/niger/)
+- [Nigeria](https://lapal.ch/landscape/patents/nigeria/)
+- [North Macedonia](https://lapal.ch/landscape/patents/north-macedonia/)
+- [Pakistan](https://lapal.ch/landscape/patents/pakistan/)
+- [Paraguay](https://lapal.ch/landscape/patents/paraguay/)
+- [Peru](https://lapal.ch/landscape/patents/peru/)
+- [Philippines](https://lapal.ch/landscape/patents/philippines/)
+- [Rwanda](https://lapal.ch/landscape/patents/rwanda/)
+- [Sao Tome and Principe](https://lapal.ch/landscape/patents/sao-tome-and-principe/)
+- [Senegal](https://lapal.ch/landscape/patents/senegal/)
+- [Serbia](https://lapal.ch/landscape/patents/serbia/)
+- [Sierra Leone](https://lapal.ch/landscape/patents/sierra-leone/)
+- [Solomon Islands](https://lapal.ch/landscape/patents/solomon-islands/)
+- [South Africa](https://lapal.ch/landscape/patents/south-africa/)
+- [Sri Lanka](https://lapal.ch/landscape/patents/sri-lanka/)
+- [St. Lucia](https://lapal.ch/landscape/patents/st-lucia/)
+- [Sudan](https://lapal.ch/landscape/patents/sudan/)
+- [Tajikistan](https://lapal.ch/landscape/patents/tajikistan/)
+- [Tanzania](https://lapal.ch/landscape/patents/tanzania/)
+- [Thailand](https://lapal.ch/landscape/patents/thailand/)
+- [Togo](https://lapal.ch/landscape/patents/togo/)
+- [Tunisia](https://lapal.ch/landscape/patents/tunisia/)
+- [Turkiye](https://lapal.ch/landscape/patents/turkiye/)
+- [Turkmenistan](https://lapal.ch/landscape/patents/turkmenistan/)
+- [Tuvalu](https://lapal.ch/landscape/patents/tuvalu/)
+- [Uganda](https://lapal.ch/landscape/patents/uganda/)
+- [Ukraine](https://lapal.ch/landscape/patents/ukraine/)
+- [Uzbekistan](https://lapal.ch/landscape/patents/uzbekistan/)
+- [Venezuela, RB](https://lapal.ch/landscape/patents/venezuela-rb/)
+- [Viet Nam](https://lapal.ch/landscape/patents/viet-nam/)
+- [Zambia](https://lapal.ch/landscape/patents/zambia/)
+- [Zimbabwe](https://lapal.ch/landscape/patents/zimbabwe/)
