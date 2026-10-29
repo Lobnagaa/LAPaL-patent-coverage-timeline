@@ -1,6 +1,6 @@
 # LAPaL patent coverage — developer handover
 
-Internal MPP document. Prototype by MPP (Lobna Gaayeb), October 2026, for the lapal.ch developers.
+Prototype by MPP (Lobna Gaayeb), October 2026, for the lapal.ch developers.
 
 The prototype (`LAPaL_patent_coverage_prototype_<date>.html`) is a single offline HTML file built
 with d3 7.9.0. It is a reference for behaviour and data rules, not code to ship: please rebuild it
@@ -214,7 +214,7 @@ Every page has a unique `<title>` and meta description, a canonical URL, Open Gr
 with `Dataset` (creator MPP, `dateModified`, `isBasedOn` MedsPaL and LAPaL, CSV `distribution`),
 `BreadcrumbList` and `FAQPage`. No JavaScript is needed to read anything. Entries with no status in any
 low- or middle-income country (mostly preliminary card entries) say so plainly instead of "granted in 0".
-**All pages carry `<meta name="robots" content="noindex, nofollow">` while the content is internal;
+**All pages carry `<meta name="robots" content="noindex, nofollow">` until MPP decides they should be indexed;
 `build_static.py --public` removes it. lapal.ch must not serve the noindex version once cleared.**
 
 Recommended for the lapal.ch rebuild, most important first (all shown in the reference pages):
@@ -251,7 +251,7 @@ Recommended for the lapal.ch rebuild, most important first (all shown in the ref
    sections, the landscape pages and the data files. An emerging convention, not yet widely read, but
    cheap to add.
 
-Content is internal until MPP clears it for publication; apply the above once it is cleared.
+The noindex tag stays until MPP decides the pages should be indexed; apply the above on lapal.ch.
 
 ## 6. Files in this package
 

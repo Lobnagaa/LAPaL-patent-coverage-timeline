@@ -153,7 +153,7 @@ dl.faq dt { font-weight: 600; margin-top: 12px; } dl.faq dd { margin: 4px 0 0; }
 
 def page(path, title, description, body, jsonld, public):
     canonical = SITE + '/' + path
-    robots = '' if public else '\n  <meta name="robots" content="noindex, nofollow">  <!-- internal until cleared: build with --public -->'
+    robots = '' if public else '\n  <meta name="robots" content="noindex, nofollow">  <!-- until MPP decides to index: build with --public -->'
     head = f"""<!doctype html>
 <html lang="en">
 <head>
@@ -600,7 +600,7 @@ def main():
         # To merge into lapal.ch's own robots.txt (which already allows all crawlers) once public.
         open(os.path.join(OUT, 'robots-snippet.txt'), 'w').write(
             f'# Add to https://lapal.ch/robots.txt once the patent pages are public:\nSitemap: {SITE}/sitemap-patents.xml\n')
-    print('wrote %d pages to %s%s' % (len(pages), os.path.relpath(OUT, ROOT), '' if args.public else ' (noindex: internal)'))
+    print('wrote %d pages to %s%s' % (len(pages), os.path.relpath(OUT, ROOT), '' if args.public else ' (noindex)'))
     for p in pages[:5]:
         print('  /' + p)
 

@@ -1,4 +1,4 @@
-"""Assemble the SharePoint package (internal MPP use) after building the snapshot and the prototype.
+"""Assemble the SharePoint package after building the snapshot and the prototype.
 
 Usage (from the project folder):
     python3 tools/build_patents.py && python3 tools/build_prototype.py && python3 tools/package_share.py

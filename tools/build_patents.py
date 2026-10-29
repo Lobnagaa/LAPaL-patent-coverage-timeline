@@ -642,7 +642,7 @@ def main():
     snapshot = {
         'meta': {
             'generated_at': dt.datetime.now().isoformat(timespec='seconds'),
-            'title': 'LAPaL patent coverage — prototype data snapshot (internal MPP use)',
+            'title': 'LAPaL patent coverage — prototype data snapshot',
             'sources': {'lapal': 'https://lapal.ch entry pages (patent cards, embedded MedsPaL uuid)',
                         'medspal': 'https://assets.medspal.org product and patent JSON',
                         'income': 'World Bank country API, current classification'},

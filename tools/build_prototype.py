@@ -1,4 +1,4 @@
-"""Bundle the prototype into one self-contained HTML file (internal MPP use, share via SharePoint).
+"""Bundle the prototype into one self-contained HTML file (offline; published on GitHub Pages via tools/build_site.py).
 
 Usage (from the project folder, after tools/build_patents.py):
     python3 tools/build_prototype.py

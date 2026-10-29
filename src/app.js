@@ -1259,7 +1259,7 @@
       subtitle: `${state.day ? 'Projected from ' + longDate(state.day) : 'Today (status as recorded)'} · ${state.compoundOnly ? 'compound patents only' : 'any patent'}${e.preliminary ? ' · PRELIMINARY DATA (LAPaL cards)' : ''}`,
       legend: statusLegend([{ color: 'var(--none-lmic)', label: 'No record, LMIC' },
         { color: 'var(--none-hic)', label: 'High income: not covered' }]),
-      footer: `Source: ${e.source === 'medspal' ? 'MedsPaL via LAPaL' : 'LAPaL patent cards'}, snapshot ${snapshot()} · Internal MPP use only · ${e.url}`,
+      footer: `Source: ${e.source === 'medspal' ? 'MedsPaL via LAPaL' : 'LAPaL patent cards'}, snapshot ${snapshot()} · Working prototype · ${e.url}`,
       filename: `lapal-patent-map_${slug(e.name)}_${dateTag()}.png`,
     });
   };
@@ -1289,7 +1289,7 @@
       subtitle: `${cv.day ? 'Projected to ' + longDate(cv.day) : 'Today (status as recorded in MedsPaL)'} · ${cv.compound ? 'compound patents only' : 'any patent'} · bars run from filing to expected expiry` +
         (cvEdits() ? ` · ${cvEdits()}` : ''),
       legend: statusLegend([]),
-      footer: `Source: LAPaL entries with MedsPaL patent data, snapshot ${snapshot()} · Internal MPP use only · ${LAPAL} · ${MEDSPAL}`,
+      footer: `Source: LAPaL entries with MedsPaL patent data, snapshot ${snapshot()} · Working prototype · ${LAPAL} · ${MEDSPAL}`,
       filename: `lapal-hiv-patents_${slug(cname(cv.iso))}_${cv.day || 'today'}.png`,
     });
     host.style.width = ''; drawCvProducts();
@@ -1333,7 +1333,7 @@
       subtitle: `Filing to expected expiry · colour: ${state.day ? 'status from ' + longDate(state.day) : 'status today'}${state.iso ? ' in ' + cname(state.iso) : ' in any country'}` +
         ` · ${state.compoundOnly ? 'compound patents only' : 'any patent'}${state.famFocus ? ' · one family only' : ''}${e.preliminary ? ' · PRELIMINARY DATA (LAPaL cards)' : ''}`,
       legend: statusLegend([{ color: state.iso ? 'var(--none-hic)' : 'var(--none-lmic)', label: state.iso ? 'No record in this country' : 'No country detail' }]),
-      footer: `Source: ${e.source === 'medspal' ? 'MedsPaL via LAPaL' : 'LAPaL patent cards; filing dates from Google Patents'}, snapshot ${snapshot()} · Internal MPP use only · ${e.url}`,
+      footer: `Source: ${e.source === 'medspal' ? 'MedsPaL via LAPaL' : 'LAPaL patent cards; filing dates from Google Patents'}, snapshot ${snapshot()} · Working prototype · ${e.url}`,
       filename: `lapal-patent-timeline_${slug(e.name)}_${dateTag()}.png`,
     });
     host.style.width = ''; drawTimeline();
@@ -1355,7 +1355,7 @@
   };
   // Printed pages end with the sources and links of what is shown.
   window.addEventListener('beforeprint', () => {
-    const lines = [`Snapshot ${snapshot()} · Internal MPP use only`];
+    const lines = [`Snapshot ${snapshot()} · Working prototype`];
     if (state.view === 'country') {
       lines.push(`Data: LAPaL entries with MedsPaL patent data (${LAPAL}, ${MEDSPAL}).`);
       hivProducts.forEach(p => lines.push(`${p.name}: ${p.entries.map(en => en.url).join(' ; ')}`));

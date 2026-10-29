@@ -1,5 +1,5 @@
 LAPaL patent coverage — working prototype
-INTERNAL MPP USE ONLY. Please do not forward outside MPP or upload to a public site.
+Working prototype by the Medicines Patent Pool (MPP) for LAPaL.
 
 WHAT IT IS
 A prototype of a new LAPaL feature: for each LAPaL entry, a world map of patent status

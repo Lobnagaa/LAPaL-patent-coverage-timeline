@@ -1,6 +1,6 @@
 # LAPaL patent coverage — proposed approach
 
-Draft, updated 26 Oct 2026. Internal MPP use only: not for public hosting.
+Draft, updated 26 Oct 2026.
 
 **Deliverable:** a working prototype, as one self-contained HTML file shared via SharePoint, for the
 lapal.ch developers to rebuild on the site. It mirrors the two places the feature will live.
