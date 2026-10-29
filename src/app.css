@@ -183,6 +183,10 @@ button { font: inherit; }
 .tl-body .line-label { font-size: 11px; font-weight: 600; }
 .tl-body .row-hit:hover + g .fam-label { text-decoration: underline; }
 .tl-legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 12px; color: var(--ink-2); margin-top: 8px; }
+.cv-legend { align-items: center; margin: 4px 0 10px; padding: 8px 12px; background: var(--page); border-radius: 6px; }
+.cv-legend > b { color: var(--ink); font-weight: 600; }
+.cv-legend i.ln { width: 0; height: 14px; border-radius: 0; background: none; }
+.cv-legend-note { flex-basis: 100%; }
 
 /* ---- stage 4: view switcher, landscape filters, map/table, by-country view ---- */
 .views { background: var(--surface); border-bottom: 1px solid var(--line); }

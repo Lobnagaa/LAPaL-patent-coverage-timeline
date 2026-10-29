@@ -934,6 +934,16 @@
     licNote.hidden = !inTerr.length;
     licNote.innerHTML = inTerr.length ? `<span aria-hidden="true">🤝</span> <b>Voluntary licences:</b> ${esc(cname(iso))} is in the territory of ${inTerr.join('; ')}. ` +
       `These licences ${LIC_MAY}, whatever the patent status shown; check the licence terms.` : '';
+    // Legend above the chart: bar and dot colours, plus the date lines.
+    {
+      const sw = c => `<i style="background:${c}"></i>`;
+      const ln = (c, dash) => `<i class="ln" style="border-left:2px ${dash ? 'dashed' : 'solid'} ${c}"></i>`;
+      document.getElementById('cv-legend').innerHTML = '<b>Bars and dots:</b>' +
+        [[COLOR.granted, 'Granted'], [COLOR.filed, 'Filed'], [COLOR.not_in_force, 'Not in force']].map(([c, t]) => `<span class="swatch">${sw(c)}${t}</span>`).join('') +
+        `<span class="swatch">${ln('var(--ink-2)', true)}Today</span>` +
+        (cv.day ? `<span class="swatch">${ln('var(--accent)')}Selected date</span>` : '') +
+        `<span class="cv-legend-note">The dot before each product shows its best status in this country.</span>`;
+    }
     const cvs = document.getElementById('cv-summary');
     {
       const live = withRec.filter(r => r.best === 'granted' || r.best === 'filed');

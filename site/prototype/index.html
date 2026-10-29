@@ -190,6 +190,10 @@ button { font: inherit; }
 .tl-body .line-label { font-size: 11px; font-weight: 600; }
 .tl-body .row-hit:hover + g .fam-label { text-decoration: underline; }
 .tl-legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 12px; color: var(--ink-2); margin-top: 8px; }
+.cv-legend { align-items: center; margin: 4px 0 10px; padding: 8px 12px; background: var(--page); border-radius: 6px; }
+.cv-legend > b { color: var(--ink); font-weight: 600; }
+.cv-legend i.ln { width: 0; height: 14px; border-radius: 0; background: none; }
+.cv-legend-note { flex-basis: 100%; }
 
 /* ---- stage 4: view switcher, landscape filters, map/table, by-country view ---- */
 .views { background: var(--surface); border-bottom: 1px solid var(--line); }
@@ -573,6 +577,7 @@ table.if tr.if-detail .tags button.tag:hover { background: #fff; color: #6E1C50;
           <div class="hic-note" id="cv-hic-note" role="note" hidden></div>
           <p class="tl-note">One row per product. Bars are the patents recorded in this country, from filing to expected expiry, coloured by status on the selected date.</p>
           <p class="map-summary" id="cv-summary" aria-live="polite"></p>
+          <div class="tl-legend cv-legend" id="cv-legend" aria-label="Legend"></div>
           <div class="tl-body" id="cv-products"></div>
         </div>
         <div class="cv-card">
@@ -1531,6 +1536,16 @@ table.if tr.if-detail .tags button.tag:hover { background: #fff; color: #6E1C50;
     licNote.hidden = !inTerr.length;
     licNote.innerHTML = inTerr.length ? `<span aria-hidden="true">🤝</span> <b>Voluntary licences:</b> ${esc(cname(iso))} is in the territory of ${inTerr.join('; ')}. ` +
       `These licences ${LIC_MAY}, whatever the patent status shown; check the licence terms.` : '';
+    // Legend above the chart: bar and dot colours, plus the date lines.
+    {
+      const sw = c => `<i style="background:${c}"></i>`;
+      const ln = (c, dash) => `<i class="ln" style="border-left:2px ${dash ? 'dashed' : 'solid'} ${c}"></i>`;
+      document.getElementById('cv-legend').innerHTML = '<b>Bars and dots:</b>' +
+        [[COLOR.granted, 'Granted'], [COLOR.filed, 'Filed'], [COLOR.not_in_force, 'Not in force']].map(([c, t]) => `<span class="swatch">${sw(c)}${t}</span>`).join('') +
+        `<span class="swatch">${ln('var(--ink-2)', true)}Today</span>` +
+        (cv.day ? `<span class="swatch">${ln('var(--accent)')}Selected date</span>` : '') +
+        `<span class="cv-legend-note">The dot before each product shows its best status in this country.</span>`;
+    }
     const cvs = document.getElementById('cv-summary');
     {
       const live = withRec.filter(r => r.best === 'granted' || r.best === 'filed');
